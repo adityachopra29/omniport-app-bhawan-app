@@ -1,0 +1,1 @@
+from bhawan_app.models.hostel_profile import HostelProfile
