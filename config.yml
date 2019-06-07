@@ -1,0 +1,8 @@
+nomenclature:
+  name: bhawan_app
+  verboseName: Bhawan App
+description: Manages information of hostels
+baseUrls:
+  http: bhawan_app/
+  static: bhawan_app/
+isApi: true
