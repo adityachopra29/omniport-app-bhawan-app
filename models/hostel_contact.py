@@ -8,7 +8,7 @@ from bhawan_app.constants import hostel_designations
 
 class HostelContact(Model):
     """
-    This model holds contact information of the staff concerned with a hostel 
+    This model holds contact information of the staff concerned with a hostel
     """
 
     hostel = models.ForeignKey(
@@ -50,7 +50,7 @@ class HostelContact(Model):
         person = self.person
         designation = self.designation_name
         return f'{hostel}: {person}, {designation}'
-    
+
     class Meta:
         """
         Meta class for HostelContact

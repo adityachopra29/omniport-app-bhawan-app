@@ -2,7 +2,7 @@
 Designation of hostel staff at IIT Roorkee
 """
 
-# Administrative council 
+# Administrative council
 ASSISTANT_WARDEN = 'aw'
 CHIEF_WARDEN = 'cw'
 SUPERVISOR = 'sup'
@@ -33,6 +33,5 @@ STUDENT_COUNCIL = (
 )
 
 HOSTEL_DESIGNATIONS = (
-    ADMINISTRATIVE_COUNCIL
-    + STUDENT_COUNCIL
+    ADMINISTRATIVE_COUNCIL + STUDENT_COUNCIL
 )

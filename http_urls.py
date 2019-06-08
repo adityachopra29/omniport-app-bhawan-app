@@ -2,7 +2,7 @@ from django.urls import path
 
 from bhawan_app.views.hostel_profile import (
     HostelProfileListView,
-    HostelProfileDetailView,    
+    HostelProfileDetailView,
 )
 from bhawan_app.views.hostel_contact import HostelContactDetailView
 
