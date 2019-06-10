@@ -10,6 +10,7 @@ class HostelContactDetailView(generics.ListAPIView):
     """
 
     serializer_class = HostelContactSerializer
+    lookup_field = 'hostel__code'
 
     def get_queryset(self):
         """
@@ -17,10 +18,7 @@ class HostelContactDetailView(generics.ListAPIView):
         :return: the queryset of contacts of a hostel
         """
 
-        hostel = self.request.query_params.get('code')
-        if hostel:
-            queryset = HostelContact.objects.filter(hostel__code=hostel)
-        else:
-            queryset = HostelContact.objects.none()
+        hostel = self.kwargs['hostel__code']
+        queryset = HostelContact.objects.filter(hostel__code=hostel)
 
         return queryset

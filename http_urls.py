@@ -20,7 +20,7 @@ urlpatterns = [
         name='hostel_profle_detail',
     ),
     path(
-        'hostel_contact/',
+        'hostel_contact/<hostel__code>',
         HostelContactDetailView.as_view(),
         name='hostel_contact_detail',
     ),
