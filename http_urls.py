@@ -6,6 +6,8 @@ from bhawan_app.views.hostel_profile import (
 )
 from bhawan_app.views.hostel_contact import HostelContactDetailView
 
+from bhawan_app.views.hostel_facility import HostelFacilityListView
+
 app_name = 'bhawan_app'
 
 urlpatterns = [
@@ -23,5 +25,10 @@ urlpatterns = [
         'hostel_contact/<hostel__code>',
         HostelContactDetailView.as_view(),
         name='hostel_contact_detail',
+    ),
+    path(
+        'hostel_facility/<hostel__code>',
+        HostelFacilityListView.as_view(),
+        name='hostel_facility_list',
     ),
 ]
