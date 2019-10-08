@@ -4,7 +4,7 @@ from bhawan_app.views.hostel_profile import (
     HostelProfileListView,
     HostelProfileDetailView,
 )
-from bhawan_app.views.hostel_contact import HostelContactDetailView
+from bhawan_app.views.hostel_contact import HostelContactListView
 
 from bhawan_app.views.hostel_facility import HostelFacilityListView
 
@@ -23,7 +23,7 @@ urlpatterns = [
     ),
     path(
         'hostel_contact/<hostel__code>',
-        HostelContactDetailView.as_view(),
+        HostelContactListView.as_view(),
         name='hostel_contact_detail',
     ),
     path(

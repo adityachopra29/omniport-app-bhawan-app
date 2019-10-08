@@ -4,7 +4,7 @@ from bhawan_app.models import HostelContact
 from bhawan_app.serializers.hostel_contact import HostelContactSerializer
 
 
-class HostelContactDetailView(generics.ListAPIView):
+class HostelContactListView(generics.ListAPIView):
     """
     Detail view for getting contact information of a single hostel
     """
