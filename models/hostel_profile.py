@@ -16,7 +16,7 @@ class HostelProfile(Model):
     )
     description = models.TextField()
     display_picture = models.ImageField(
-        upload_to=UploadTo('bhawan_app', 'hostel'),
+        upload_to=UploadTo('bhawan_app', 'hostel'), 
     )
     homepage_url = models.URLField(
         blank=True,

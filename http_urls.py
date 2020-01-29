@@ -1,15 +1,22 @@
-from django.urls import path
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
 
 from bhawan_app.views.hostel_profile import (
     HostelProfileListView,
     HostelProfileDetailView,
 )
 from bhawan_app.views.hostel_contact import HostelContactListView
-
 from bhawan_app.views.hostel_facility import HostelFacilityListView
+from bhawan_app.views.hostel_room_booking import HostelRoomBookingViewset
+from bhawan_app.views.hostel_complaint import HostelComplaintViewset
 
 app_name = 'bhawan_app'
 
+router = DefaultRouter()
+router.register(r'hostel_room_booking', HostelRoomBookingViewset)
+router.register(r'hostel_complaint', HostelComplaintViewset)
+
+    
 urlpatterns = [
     path(
         'hostel_profile/',
@@ -32,3 +39,5 @@ urlpatterns = [
         name='hostel_facility_list',
     ),
 ]
+
+urlpatterns += router.urls
