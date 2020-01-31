@@ -9,26 +9,25 @@ class HostelRoomBookingSerializer(serializers.ModelSerializer):
     Serializer for HostelRoomBooking objects
     """
     hostel = serializers.CharField(
-        source='hostel.name'
+        source='hostel.name',
+        read_only=True,
     )
 
     hostel_code = serializers.CharField(
-        source='hostel.code'
+        source='hostel.code',
     )
 
     class Meta:
         model = HostelRoomBooking
         fields = [
+            'id',
+            'booked_by',
             'hostel',
-            'filer',
             'status',
             'requested_from',
             'requested_till',
-            'room_no_of_filer',
+            'booked_by_room_no',
             'hostel_code',
-        ]
-        read_only_field = [
-            'hostel',
         ]
 
     def create(self, validated_data):
@@ -37,3 +36,5 @@ class HostelRoomBookingSerializer(serializers.ModelSerializer):
         hostel = Residence.objects.get(code=hostel_code)
         validated_data['hostel'] = hostel
         return super().create(validated_data)
+
+    

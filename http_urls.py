@@ -7,14 +7,14 @@ from bhawan_app.views.hostel_profile import (
 )
 from bhawan_app.views.hostel_contact import HostelContactListView
 from bhawan_app.views.hostel_facility import HostelFacilityListView
-from bhawan_app.views.hostel_room_booking import HostelRoomBookingViewset
 from bhawan_app.views.hostel_complaint import HostelComplaintViewset
+from bhawan_app.views.hostel_room_booking import HostelRoomBookingViewset
 
 app_name = 'bhawan_app'
 
 router = DefaultRouter()
-router.register(r'hostel_room_booking', HostelRoomBookingViewset)
-router.register(r'hostel_complaint', HostelComplaintViewset)
+router.register(r'hostel_complaint/(?P<hostel__code>[\w\-]+)', HostelComplaintViewset, basename='HostelComplaint')
+router.register(r'hostel_room_booking/(?P<hostel__code>[\w\-]+)', HostelRoomBookingViewset, basename='HostelRoomBooking')
 
     
 urlpatterns = [

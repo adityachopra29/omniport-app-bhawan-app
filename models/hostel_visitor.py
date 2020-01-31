@@ -1,7 +1,7 @@
 import swapper
 
 from formula_one.models.base import Model
-from bhawan_app.models import HostelRoomBooking
+from bhawan_app.models.hostel_room_booking import HostelRoomBooking
 from django.db import models
 
 

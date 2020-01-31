@@ -14,7 +14,7 @@ class HostelComplaint(Model):
         on_delete=models.CASCADE,
     )
 
-    booked_by = models.ForeignKey(
+    complainant = models.ForeignKey(
         to=swapper.get_model_name('Kernel', 'Person'),
         on_delete=models.CASCADE,
     )

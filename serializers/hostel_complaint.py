@@ -10,7 +10,8 @@ class HostelComplaintSerializer(serializers.ModelSerializer):
     """
 
     hostel = serializers.CharField(
-        source='hostel.name'
+        source='hostel.name',
+        read_only=True,
     )
 
     hostel_code = serializers.CharField(
@@ -21,7 +22,7 @@ class HostelComplaintSerializer(serializers.ModelSerializer):
         model = HostelComplaint
         fields = [
             'hostel',
-            'filer',
+            'complainant',
             'status',
             'complaint_type',
             'available_from',

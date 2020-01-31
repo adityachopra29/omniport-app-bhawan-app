@@ -14,7 +14,7 @@ class HostelRoomBooking(Model):
         on_delete=models.CASCADE,
     )
     
-    complainant = models.ForeignKey(
+    booked_by = models.ForeignKey(
         to=swapper.get_model_name('Kernel', 'Person'),
         on_delete=models.CASCADE
     )
@@ -32,5 +32,5 @@ class HostelRoomBooking(Model):
     booked_by_room_no = models.PositiveIntegerField()
 
     def __str__(self):
-        return f"{self.filer.full_name}'s booking."
+        return f"{self.booked_by.full_name}'s booking."
     
