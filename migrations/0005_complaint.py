@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('datetime_created', models.DateTimeField(auto_now_add=True)),
                 ('datetime_modified', models.DateTimeField(auto_now=True)),
-                ('complaint_type', models.CharField(choices=[('ele', 'Electric'), ('toi', 'Toilet'), ('car', 'Carpentry'), ('cle', 'Cleaning'), ('oth', 'Other')], default='oth', max_length=10, unique=True)),
+                ('complaint_type', models.CharField(choices=[('ele', 'Electric'), ('toi', 'Toilet'), ('car', 'Carpentry'), ('cle', 'Cleaning'), ('oth', 'Other')], default='oth', max_length=10)),
                 ('status', models.CharField(choices=[('apr', 'Approved'), ('pen', 'Pending'), ('rej', 'Rejected')], default='pen', max_length=10)),
                 ('description', models.TextField()),
                 ('available_from', models.TimeField()),

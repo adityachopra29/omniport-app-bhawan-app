@@ -21,7 +21,6 @@ class Complaint(Model):
 
     complaint_type = models.CharField(
         max_length=10,
-        unique=True,
         choices=complaint_types.COMPLAINT_TYPES,
         default=complaint_types.OTHER
     )
