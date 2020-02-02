@@ -9,7 +9,7 @@ from bhawan_app.models import (
     Complaint,
 )
 
-from bhawan_app.models.roles import Admin
+from bhawan_app.models.roles import HostelAdmin
 
 omnipotence.register(Profile)
 omnipotence.register(Contact)
@@ -17,4 +17,4 @@ omnipotence.register(Facility)
 omnipotence.register(RoomBooking)
 omnipotence.register(Visitor)
 omnipotence.register(Complaint)
-omnipotence.register(Admin)
+omnipotence.register(HostelAdmin)

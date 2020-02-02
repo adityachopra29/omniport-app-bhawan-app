@@ -6,7 +6,7 @@ from kernel.models.roles.base import AbstractRole
 from bhawan_app.constants import designations
 
 
-class Admin(AbstractRole):
+class HostelAdmin(AbstractRole):
     """
     This model holds information pertaining to the administrator of a hostel
     """

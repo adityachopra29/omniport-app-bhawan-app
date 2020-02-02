@@ -1,1 +1,1 @@
-from bhawan_app.models.roles.admin import Admin
+from bhawan_app.models.roles.hostel_admin import HostelAdmin
