@@ -3,7 +3,7 @@ from django.db import models
 
 from kernel.models.roles.base import AbstractRole
 
-from bhawan_app.constants import hostel_designations
+from bhawan_app.constants import designations
 
 
 class Admin(AbstractRole):
@@ -13,7 +13,7 @@ class Admin(AbstractRole):
 
     designation = models.CharField(
         max_length=5,
-        choices=hostel_designations.HOSTEL_DESIGNATIONS,
+        choices=designations.DESIGNATIONS,
     )
     hostel = models.ForeignKey(
         to=swapper.get_model_name('kernel', 'Residence'),

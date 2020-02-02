@@ -3,10 +3,10 @@ from django.contrib.contenttypes import fields as contenttypes_fields
 
 import swapper
 from formula_one.models.base import Model
-from bhawan_app.constants import hostel_designations
+from bhawan_app.constants import designations
 
 
-class HostelContact(Model):
+class Contact(Model):
     """
     This model holds contact information of the staff concerned with a hostel
     """
@@ -22,7 +22,7 @@ class HostelContact(Model):
     designation = models.CharField(
         max_length=5,
         unique=True,
-        choices=hostel_designations.HOSTEL_DESIGNATIONS,
+        choices=designations.DESIGNATIONS,
     )
     contact_information = contenttypes_fields.GenericRelation(
         to='formula_one.ContactInformation',
@@ -50,10 +50,3 @@ class HostelContact(Model):
         person = self.person
         designation = self.designation_name
         return f'{hostel}: {person}, {designation}'
-
-    class Meta:
-        """
-        Meta class for HostelContact
-        """
-
-        verbose_name_plural = 'hostel contact'

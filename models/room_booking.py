@@ -4,7 +4,8 @@ from formula_one.models.base import Model
 from django.db import models
 from bhawan_app.constants import statuses
 
-class HostelRoomBooking(Model):
+
+class RoomBooking(Model):
     """
     Describes the details of a complaint registered.
     """
@@ -32,5 +33,10 @@ class HostelRoomBooking(Model):
     booked_by_room_no = models.PositiveIntegerField()
 
     def __str__(self):
+        """
+        Return the string representation of the model
+        :return: the string representation of the model
+        """
+
         return f"{self.booked_by.full_name}'s booking."
     

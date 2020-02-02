@@ -4,7 +4,7 @@ from formula_one.models.base import Model
 from django.db import models
 from bhawan_app.constants import complaint_types, statuses
 
-class HostelComplaint(Model):
+class Complaint(Model):
     """
     Describes the details of a complaint registered.
     """
@@ -42,5 +42,10 @@ class HostelComplaint(Model):
 
 
     def __str__(self):
+        """
+        Return the string representation of the model
+        :return: the string representation of the model
+        """
+
         return f'{self.complaint_type} issue in {self.room_no}'
     

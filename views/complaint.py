@@ -3,12 +3,12 @@ from rest_framework.response import Response
 from django.core.exceptions import ObjectDoesNotExist
 
 
-from bhawan_app.models import HostelComplaint
+from bhawan_app.models import Complaint
 from bhawan_app.permissions.is_owner_or_admin import IsOwnerOrHostelAdmin
-from bhawan_app.serializers.hostel_complaint import HostelComplaintSerializer
+from bhawan_app.serializers.complaint import ComplaintSerializer
 
 
-class HostelComplaintViewset(mixins.ListModelMixin,
+class ComplaintViewset(mixins.ListModelMixin,
                              mixins.CreateModelMixin,
                              mixins.RetrieveModelMixin,
                              viewsets.GenericViewSet):
@@ -17,10 +17,10 @@ class HostelComplaintViewset(mixins.ListModelMixin,
     """
 
     permission_classes = [IsOwnerOrHostelAdmin]
-    serializer_class = HostelComplaintSerializer
+    serializer_class = ComplaintSerializer
 
     def get_queryset(self):
-        queryset = HostelComplaint.objects.filter(hostel__code=self.kwargs['hostel__code'])
+        queryset = Complaint.objects.filter(hostel__code=self.kwargs['hostel__code'])
         return queryset
 
     def retrieve(self, request, hostel__code, pk):
@@ -30,5 +30,5 @@ class HostelComplaintViewset(mixins.ListModelMixin,
             self.check_object_permissions(request, complaint.complainant)
         except ObjectDoesNotExist:
             complaint = None
-        serializer = HostelComplaintSerializer(complaint)
+        serializer = ComplaintSerializer(complaint)
         return Response(serializer.data)

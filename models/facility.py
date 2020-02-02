@@ -5,7 +5,7 @@ from formula_one.models.base import Model
 from formula_one.utils.upload_to import UploadTo
 
 
-class HostelFacility(Model):
+class Facility(Model):
     """
     This model contains information about a facility of a hostel
     """
@@ -41,7 +41,7 @@ class HostelFacility(Model):
 
     class Meta:
         """
-        Meta class for HostelFacility
+        Meta class for Facility
         """
 
-        verbose_name_plural = 'hostel facilities'
+        verbose_name_plural = 'facilities'

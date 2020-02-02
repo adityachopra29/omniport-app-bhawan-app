@@ -2,32 +2,37 @@ import swapper
 
 from rest_framework import serializers
 
-from bhawan_app.models import HostelRoomBooking 
+from bhawan_app.models import Complaint 
 
-class HostelRoomBookingSerializer(serializers.ModelSerializer):
+class ComplaintSerializer(serializers.ModelSerializer):
     """
-    Serializer for HostelRoomBooking objects
+    Serializer for Complaint objects
     """
+
     hostel = serializers.CharField(
         source='hostel.name',
         read_only=True,
     )
 
     hostel_code = serializers.CharField(
-        source='hostel.code',
+        source='hostel.code'
     )
 
     class Meta:
-        model = HostelRoomBooking
+        model = Complaint
         fields = [
-            'id',
-            'booked_by',
             'hostel',
+            'complainant',
             'status',
-            'requested_from',
-            'requested_till',
-            'booked_by_room_no',
+            'complaint_type',
+            'available_from',
+            'available_till',
+            'room_no',
             'hostel_code',
+            'description',
+        ]
+        read_only_field = [
+            'hostel',
         ]
 
     def create(self, validated_data):
@@ -36,5 +41,3 @@ class HostelRoomBookingSerializer(serializers.ModelSerializer):
         hostel = Residence.objects.get(code=hostel_code)
         validated_data['hostel'] = hostel
         return super().create(validated_data)
-
-    

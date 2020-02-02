@@ -1,21 +1,21 @@
 from rest_framework import serializers
 
-from bhawan_app.models import HostelProfile
+from bhawan_app.models import Profile
 
 
-class HostelProfileSerializer(serializers.ModelSerializer):
+class ProfileSerializer(serializers.ModelSerializer):
     """
-    Serializer for HostelProfile objects
+    Serializer for Profile objects
     """
 
     hostel = serializers.CharField(source='hostel.name')
 
     class Meta:
         """
-        Meta class for HostelProfileSerializer
+        Meta class for ProfileSerializer
         """
 
-        model = HostelProfile
+        model = Profile
         fields = [
             'hostel',
             'description',
