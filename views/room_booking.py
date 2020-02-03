@@ -38,19 +38,8 @@ class RoomBookingViewset(viewsets.ModelViewSet):
 
         queryset = self.get_queryset()
         if get_hostel_admin(request.user.person) is None:
-            bookings = queryset.filter(booked_by=request.user.person)
+            bookings = queryset.filter(person=request.user.person)
         else:
             bookings = queryset
         serializer = RoomBookingSerializer(bookings, many=True)
-        return Response(serializer.data)
-
-    def retrieve(self, request, hostel__code, pk):
-        """
-        Retrieve a single object of room bookings
-        """
-
-        queryset = self.get_queryset()
-        obj = get_object_or_404(queryset, pk=pk)
-        self.check_object_permissions(request, obj.booked_by)
-        serializer = RoomBookingSerializer(obj)
         return Response(serializer.data)

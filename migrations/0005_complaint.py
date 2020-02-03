@@ -26,7 +26,7 @@ class Migration(migrations.Migration):
                 ('available_from', models.TimeField()),
                 ('available_till', models.TimeField()),
                 ('room_no', models.PositiveIntegerField()),
-                ('complainant', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.KERNEL_PERSON_MODEL)),
+                ('person', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.KERNEL_PERSON_MODEL)),
                 ('hostel', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.KERNEL_RESIDENCE_MODEL)),
             ],
             options={

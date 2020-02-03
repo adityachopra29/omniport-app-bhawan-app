@@ -24,7 +24,7 @@ class Migration(migrations.Migration):
                 ('requested_from', models.DateField()),
                 ('requested_till', models.DateField()),
                 ('booked_by_room_no', models.PositiveIntegerField()),
-                ('booked_by', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.KERNEL_PERSON_MODEL)),
+                ('person', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.KERNEL_PERSON_MODEL)),
                 ('hostel', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.KERNEL_RESIDENCE_MODEL)),
             ],
             options={

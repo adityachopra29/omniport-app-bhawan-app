@@ -15,7 +15,7 @@ class Complaint(Model):
         on_delete=models.CASCADE,
     )
 
-    complainant = models.ForeignKey(
+    person = models.ForeignKey(
         to=swapper.get_model_name('Kernel', 'Person'),
         on_delete=models.CASCADE,
     )

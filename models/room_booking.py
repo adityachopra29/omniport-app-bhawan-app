@@ -15,7 +15,7 @@ class RoomBooking(Model):
         on_delete=models.CASCADE,
     )
 
-    booked_by = models.ForeignKey(
+    person = models.ForeignKey(
         to=swapper.get_model_name('Kernel', 'Person'),
         on_delete=models.CASCADE
     )
@@ -38,4 +38,4 @@ class RoomBooking(Model):
         :return: the string representation of the model
         """
 
-        return f"{self.booked_by.full_name}'s booking."
+        return f"{self.person.full_name}'s booking."

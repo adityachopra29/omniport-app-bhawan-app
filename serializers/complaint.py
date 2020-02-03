@@ -23,7 +23,7 @@ class ComplaintSerializer(serializers.ModelSerializer):
         model = Complaint
         fields = [
             'hostel',
-            'complainant',
+            'person',
             'status',
             'complaint_type',
             'available_from',

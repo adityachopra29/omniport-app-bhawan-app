@@ -21,14 +21,14 @@ class IsOwnerOrHostelAdmin(permissions.BasePermission):
         hostel_admin = get_hostel_admin(person, ActiveStatus.IS_ACTIVE)
         return hostel_admin is not None
 
-    def has_object_permission(self, request, view, person):
+    def has_object_permission(self, request, view, obj):
         """
         Returns if the authenticated user has the permissions to access a
         particular object
-        :param person: an instance of the Person model whose permissions is
+        :param obj: an instance of the bhawan app models whose permissions is
         checked
         :return: if the the person is allowed or not
         """
 
-        return person == request.user.person or \
+        return obj.person == request.user.person or \
             self.is_hostel_admin(request.user.person)

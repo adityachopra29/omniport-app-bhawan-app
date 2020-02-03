@@ -33,7 +33,7 @@ class ComplaintViewset(
         queryset = self.get_queryset()
         try:
             complaint = queryset.get(pk=pk)
-            self.check_object_permissions(request, complaint.complainant)
+            self.check_object_permissions(request, complaint.person)
         except ObjectDoesNotExist:
             complaint = None
         serializer = ComplaintSerializer(complaint)

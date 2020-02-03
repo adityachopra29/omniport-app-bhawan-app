@@ -13,9 +13,11 @@ class RoomBookingSerializer(serializers.ModelSerializer):
         source='hostel.name',
         read_only=True,
     )
-
     hostel_code = serializers.CharField(
         source='hostel.code',
+    )
+    booked_by = serializers.CharField(
+        source='person.full_name',
     )
 
     class Meta:
