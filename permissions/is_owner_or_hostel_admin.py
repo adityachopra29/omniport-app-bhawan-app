@@ -4,6 +4,7 @@ from formula_one.enums.active_status import ActiveStatus
 
 from bhawan_app.managers.get_hostel_admin import get_hostel_admin
 
+
 class IsOwnerOrHostelAdmin(permissions.BasePermission):
     """
     Object-level permission to only allow owners and admin of an object to edit

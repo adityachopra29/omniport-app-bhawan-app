@@ -13,10 +13,16 @@ from bhawan_app.views.room_booking import RoomBookingViewset
 app_name = 'bhawan_app'
 
 router = DefaultRouter()
-router.register(r'complaint/(?P<hostel__code>[\w\-]+)', ComplaintViewset, basename='Complaint')
-router.register(r'room_booking/(?P<hostel__code>[\w\-]+)', RoomBookingViewset, basename='RoomBooking')
+router.register(
+    r'complaint/(?P<hostel__code>[\w\-]+)',
+    ComplaintViewset, basename='Complaint',
+)
+router.register(
+    r'room_booking/(?P<hostel__code>[\w\-]+)',
+    RoomBookingViewset, basename='RoomBooking',
+)
 
-    
+
 urlpatterns = [
     path(
         'profile/',

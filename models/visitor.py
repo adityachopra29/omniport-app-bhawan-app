@@ -15,11 +15,11 @@ class Visitor(Model):
     )
 
     relation = models.CharField(
-        max_length = 10,
+        max_length=10,
     )
 
     booking = models.ForeignKey(
          RoomBooking,
          on_delete=models.CASCADE,
-         related_name="visitor",
+         related_name='visitor',
     )

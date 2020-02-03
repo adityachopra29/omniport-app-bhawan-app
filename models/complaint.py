@@ -4,6 +4,7 @@ from formula_one.models.base import Model
 from django.db import models
 from bhawan_app.constants import complaint_types, statuses
 
+
 class Complaint(Model):
     """
     Describes the details of a complaint registered.
@@ -33,12 +34,11 @@ class Complaint(Model):
 
     description = models.TextField()
 
-    available_from  = models.TimeField()
+    available_from = models.TimeField()
 
-    available_till = models.TimeField() 
+    available_till = models.TimeField()
 
     room_no = models.PositiveIntegerField()
-
 
     def __str__(self):
         """
@@ -47,4 +47,3 @@ class Complaint(Model):
         """
 
         return f'{self.complaint_type} issue in {self.room_no}'
-    

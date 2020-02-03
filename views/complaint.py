@@ -10,10 +10,12 @@ from bhawan_app.permissions.is_owner_or_hostel_admin import (
 from bhawan_app.serializers.complaint import ComplaintSerializer
 
 
-class ComplaintViewset(mixins.ListModelMixin,
-                             mixins.CreateModelMixin,
-                             mixins.RetrieveModelMixin,
-                             viewsets.GenericViewSet):
+class ComplaintViewset(
+    mixins.ListModelMixin,
+    mixins.CreateModelMixin,
+    mixins.RetrieveModelMixin,
+    viewsets.GenericViewSet,
+):
     """
     Detail view for getting complaint information of a single hostel
     """
@@ -22,7 +24,9 @@ class ComplaintViewset(mixins.ListModelMixin,
     serializer_class = ComplaintSerializer
 
     def get_queryset(self):
-        queryset = Complaint.objects.filter(hostel__code=self.kwargs['hostel__code'])
+        queryset = Complaint.objects.filter(
+            hostel__code=self.kwargs['hostel__code'],
+        )
         return queryset
 
     def retrieve(self, request, hostel__code, pk):

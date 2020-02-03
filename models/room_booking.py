@@ -14,7 +14,7 @@ class RoomBooking(Model):
         to=swapper.get_model_name('kernel', 'Residence'),
         on_delete=models.CASCADE,
     )
-    
+
     booked_by = models.ForeignKey(
         to=swapper.get_model_name('Kernel', 'Person'),
         on_delete=models.CASCADE
@@ -39,4 +39,3 @@ class RoomBooking(Model):
         """
 
         return f"{self.booked_by.full_name}'s booking."
-    

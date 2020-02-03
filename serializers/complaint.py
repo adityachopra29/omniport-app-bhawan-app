@@ -2,7 +2,8 @@ import swapper
 
 from rest_framework import serializers
 
-from bhawan_app.models import Complaint 
+from bhawan_app.models import Complaint
+
 
 class ComplaintSerializer(serializers.ModelSerializer):
     """

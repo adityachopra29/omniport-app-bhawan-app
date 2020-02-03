@@ -27,10 +27,10 @@ class RoomBookingViewset(viewsets.ModelViewSet):
         """
 
         queryset = RoomBooking.objects.filter(
-            hostel__code=self.kwargs['hostel__code']
+            hostel__code=self.kwargs['hostel__code'],
         )
         return queryset
-    
+
     def list(self, request, hostel__code):
         """
         List all the bookings according to permissions

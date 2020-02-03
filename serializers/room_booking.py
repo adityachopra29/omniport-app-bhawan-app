@@ -2,7 +2,8 @@ import swapper
 
 from rest_framework import serializers
 
-from bhawan_app.models import RoomBooking 
+from bhawan_app.models import RoomBooking
+
 
 class RoomBookingSerializer(serializers.ModelSerializer):
     """
@@ -36,5 +37,3 @@ class RoomBookingSerializer(serializers.ModelSerializer):
         hostel = Residence.objects.get(code=hostel_code)
         validated_data['hostel'] = hostel
         return super().create(validated_data)
-
-    
