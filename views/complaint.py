@@ -4,7 +4,9 @@ from django.core.exceptions import ObjectDoesNotExist
 
 
 from bhawan_app.models import Complaint
-from bhawan_app.permissions.is_owner_or_admin import IsOwnerOrHostelAdmin
+from bhawan_app.permissions.is_owner_or_hostel_admin import (
+    IsOwnerOrHostelAdmin,
+)
 from bhawan_app.serializers.complaint import ComplaintSerializer
 
 
