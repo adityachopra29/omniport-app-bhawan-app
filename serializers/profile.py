@@ -17,6 +17,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 
         model = Profile
         fields = [
+            'id',
             'hostel',
             'description',
             'homepage_url',

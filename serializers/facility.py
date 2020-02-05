@@ -19,7 +19,9 @@ class FacilitySerializer(serializers.ModelSerializer):
 
         model = Facility
         fields = [
+            'id',
             'name',
             'description',
             'display_picture',
+            'timings',
         ]

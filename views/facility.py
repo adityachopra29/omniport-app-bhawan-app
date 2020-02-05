@@ -1,16 +1,20 @@
-from rest_framework import generics
+from rest_framework import viewsets, mixins
 
 from bhawan_app.models import Facility
 from bhawan_app.serializers.facility import FacilitySerializer
 
 
-class FacilityListView(generics.ListAPIView):
+class FacilityViewset(
+    mixins.ListModelMixin,
+    mixins.CreateModelMixin,
+    mixins.RetrieveModelMixin,
+    viewsets.GenericViewSet,
+):
     """
     Detail view for getting facility information of a single hostel
     """
 
     serializer_class = FacilitySerializer
-    lookup_field = 'hostel__code'
 
     def get_queryset(self):
         """
@@ -22,3 +26,4 @@ class FacilityListView(generics.ListAPIView):
         queryset = Facility.objects.filter(hostel__code=hostel)
 
         return queryset
+    

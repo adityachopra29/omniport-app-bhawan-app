@@ -31,9 +31,11 @@ class ComplaintSerializer(serializers.ModelSerializer):
             'room_no',
             'hostel_code',
             'description',
+            'id',
         ]
         read_only_field = [
             'hostel',
+            'id',
         ]
 
     def create(self, validated_data):

@@ -1,16 +1,20 @@
-from rest_framework import generics
+from rest_framework import mixins, viewsets
 
 from bhawan_app.models import Contact
 from bhawan_app.serializers.contact import ContactSerializer
 
 
-class ContactListView(generics.ListAPIView):
+class ContactViewset(
+    mixins.ListModelMixin,
+    mixins.CreateModelMixin,
+    mixins.RetrieveModelMixin,
+    viewsets.GenericViewSet,
+):
     """
     Detail view for getting contact information of a single hostel
     """
 
     serializer_class = ContactSerializer
-    lookup_field = 'hostel__code'
 
     def get_queryset(self):
         """

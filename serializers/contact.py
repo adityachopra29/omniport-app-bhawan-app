@@ -29,6 +29,7 @@ class ContactSerializer(serializers.ModelSerializer):
 
         model = Contact
         fields = [
+            'id',
             'person',
             'designation_name',
             'contact_information',
