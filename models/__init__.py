@@ -6,4 +6,5 @@ from bhawan_app.models.visitor import Visitor
 from bhawan_app.models.complaint import Complaint
 from bhawan_app.models.roles import HostelAdmin
 from bhawan_app.models.timing import Timing
+from bhawan_app.models.relative import Relative
 

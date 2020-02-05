@@ -3,7 +3,7 @@ import swapper
 from rest_framework import serializers
 
 from bhawan_app.models import RoomBooking
-
+from bhawan_app.serializers.relative import RelativeSerializer
 
 class RoomBookingSerializer(serializers.ModelSerializer):
     """
@@ -19,6 +19,10 @@ class RoomBookingSerializer(serializers.ModelSerializer):
     booked_by = serializers.CharField(
         source='person.full_name',
     )
+    visitor = RelativeSerializer(
+        source='relative',
+        many=True,
+    )
 
     class Meta:
         model = RoomBooking
@@ -31,6 +35,7 @@ class RoomBookingSerializer(serializers.ModelSerializer):
             'requested_till',
             'booked_by_room_no',
             'hostel_code',
+            'visitor',
         ]
 
     def create(self, validated_data):

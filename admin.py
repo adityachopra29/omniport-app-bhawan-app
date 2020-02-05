@@ -8,6 +8,7 @@ from bhawan_app.models import (
     Visitor,
     Complaint,
     Timing,
+    Relative,
 )
 
 from bhawan_app.models.roles import HostelAdmin
@@ -20,3 +21,4 @@ omnipotence.register(Visitor)
 omnipotence.register(Complaint)
 omnipotence.register(HostelAdmin)
 omnipotence.register(Timing)
+omnipotence.register(Relative)
