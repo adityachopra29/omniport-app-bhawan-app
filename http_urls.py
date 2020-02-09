@@ -6,6 +6,7 @@ from bhawan_app.views.contact import ContactViewset
 from bhawan_app.views.facility import FacilityViewset
 from bhawan_app.views.complaint import ComplaintViewset
 from bhawan_app.views.room_booking import RoomBookingViewset
+from bhawan_app.views.whoami import WhoAmIViewset
 
 
 app_name = 'bhawan_app'
@@ -38,4 +39,24 @@ router.register(
     basename='contact',
 )
 
-urlpatterns = router.urls
+urlpatterns = [
+    
+    path(
+        'whoami',
+        WhoAmIViewset.as_view({
+            'get': 'retrieve',
+        }),
+        name='whoami',
+    ),
+    path(
+        'who_am_i',
+        WhoAmIViewset.as_view({
+            'get': 'retrieve',
+        }),
+        name='who_am_i',
+    )
+
+]
+
+
+urlpatterns += router.urls
