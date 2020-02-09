@@ -6,4 +6,5 @@ from bhawan_app.models.room_booking import RoomBooking
 from bhawan_app.models.relative import Relative
 from bhawan_app.models.complaint import Complaint
 from bhawan_app.models.roles import HostelAdmin
+from bhawan_app.models.event import Event
 

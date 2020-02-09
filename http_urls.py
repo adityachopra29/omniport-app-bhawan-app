@@ -7,6 +7,7 @@ from bhawan_app.views.facility import FacilityViewset
 from bhawan_app.views.complaint import ComplaintViewset
 from bhawan_app.views.room_booking import RoomBookingViewset
 from bhawan_app.views.whoami import WhoAmIViewset
+from bhawan_app.views.event import EventViewset
 
 
 app_name = 'bhawan_app'
@@ -37,6 +38,11 @@ router.register(
     r'contact/(?P<hostel__code>[\w\-]+)',
     ContactViewset,
     basename='contact',
+)
+router.register(
+    r'event/(?P<hostel__code>[\w\-]+)',
+    EventViewset,
+    basename='event',
 )
 
 urlpatterns = [
