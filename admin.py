@@ -5,7 +5,6 @@ from bhawan_app.models import (
     Contact,
     Facility,
     RoomBooking,
-    Visitor,
     Complaint,
     Timing,
     Relative,
@@ -17,7 +16,6 @@ omnipotence.register(Profile)
 omnipotence.register(Contact)
 omnipotence.register(Facility)
 omnipotence.register(RoomBooking)
-omnipotence.register(Visitor)
 omnipotence.register(Complaint)
 omnipotence.register(HostelAdmin)
 omnipotence.register(Timing)
