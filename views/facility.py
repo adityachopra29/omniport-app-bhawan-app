@@ -26,4 +26,12 @@ class FacilityViewset(
         queryset = Facility.objects.filter(hostel__code=hostel)
 
         return queryset
+
+    def create(self, request, hostel__code):
+        serializer = self.get_serializer(data=request.data)
+        print(serializer)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
     

@@ -18,4 +18,5 @@ class TimingSerializer(serializers.ModelSerializer):
             'day',
             'start',
             'end',
+            'description',
         ]

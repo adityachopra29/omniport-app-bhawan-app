@@ -25,6 +25,7 @@ class Migration(migrations.Migration):
                 ('display_picture', models.ImageField(blank=True, max_length=255, null=True, upload_to=formula_one.utils.upload_to.UploadTo('bhawan_app', 'hostel'))),
                 ('date', models.DateField()),
                 ('hostel', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.KERNEL_RESIDENCE_MODEL)),
+                ('timings', models.ManyToManyField(to='bhawan_app.Timing')),
             ],
             options={
                 'abstract': False,

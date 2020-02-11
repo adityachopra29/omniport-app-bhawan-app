@@ -20,8 +20,6 @@ class Migration(migrations.Migration):
                 ('day', models.CharField(choices=[('mon', 'Monday'), ('tue', 'Tuesday'), ('wed', 'Wednesday'), ('thu', 'Thursday'), ('fri', 'Friday'), ('sat', 'Saturday'), ('sun', 'Sunday'), ('dai', 'Daily')], max_length=50)),
                 ('start', models.TimeField()),
                 ('end', models.TimeField(blank=True, null=True)),
-                ('content_type',models.ForeignKey(limit_choices_to=models.Q(models.Q(('app_label', 'bhawan_app'), ('model', 'facility')), models.Q(('app_label', 'bhawan_app'), ('model', 'event')), _connector='OR'), on_delete=django.db.models.deletion.CASCADE, to='contenttypes.ContentType')),
-                ('object_id', models.PositiveIntegerField()),
                 ('description', models.CharField(max_length=50)),
             ],
             options={

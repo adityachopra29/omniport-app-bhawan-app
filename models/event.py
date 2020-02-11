@@ -29,7 +29,7 @@ class Event(Model):
         blank=True,
         null=True,
     )
-    timing = GenericRelation(
+    timings = models.ManyToManyField(
         Timing,
     )
     date = models.DateField()

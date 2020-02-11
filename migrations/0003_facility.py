@@ -24,6 +24,7 @@ class Migration(migrations.Migration):
                 ('description', models.TextField(blank=True, null=True)),
                 ('display_picture', models.ImageField(blank=True, max_length=255, null=True, upload_to=formula_one.utils.upload_to.UploadTo('bhawan_app', 'hostel'))),
                 ('hostel', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.KERNEL_RESIDENCE_MODEL)),
+                ('timings', models.ManyToManyField(to='bhawan_app.Timing')),
             ],
             options={
                 'verbose_name_plural': 'facilities',

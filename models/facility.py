@@ -1,7 +1,6 @@
 from django.db import models
 
 import swapper
-from django.contrib.contenttypes.fields import GenericRelation
 from formula_one.models.base import Model
 from formula_one.utils.upload_to import UploadTo
 from bhawan_app.models import Timing
@@ -31,7 +30,7 @@ class Facility(Model):
         blank=True,
         null=True,
     )
-    timing = GenericRelation(
+    timings = models.ManyToManyField(
         Timing,
     )
 
