@@ -38,3 +38,10 @@ class ComplaintViewset(
             complaint = None
         serializer = ComplaintSerializer(complaint)
         return Response(serializer.data)
+
+    def get_serializer_context(self):
+        return {
+            'person': self.request.person,
+            'hostel__code': self.kwargs['hostel__code'],
+        }
+    

@@ -16,7 +16,8 @@ class ComplaintSerializer(serializers.ModelSerializer):
     )
 
     hostel_code = serializers.CharField(
-        source='hostel.code'
+        source='hostel.code',
+        read_only=True,
     )
 
     class Meta:
@@ -33,14 +34,20 @@ class ComplaintSerializer(serializers.ModelSerializer):
             'description',
             'id',
         ]
-        read_only_field = [
-            'hostel',
-            'id',
-        ]
+        extra_kwargs = {
+            'person': {'read_only': True},
+        }
 
     def create(self, validated_data):
-        Residence = swapper.load_model('Kernel', 'Residence')
-        hostel_code = validated_data['hostel']['code']
-        hostel = Residence.objects.get(code=hostel_code)
+        Hostel = swapper.load_model('Kernel', 'Residence')
+        print("*"*50)
+        print(self.context)
+        print("*"*50)
+        hostel_code = self.context['hostel__code']
+        try:
+            hostel = Hostel.objects.get(code=hostel_code)
+        except Exception:
+            raise serializers.ValidationError('Wrong hostel code')
+        validated_data['person'] = self.context['person']
         validated_data['hostel'] = hostel
         return super().create(validated_data)
