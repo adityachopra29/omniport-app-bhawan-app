@@ -1,7 +1,7 @@
 import swapper
 
 from rest_framework import serializers
-from bhawan_app.models import Facility, Timing
+from bhawan_app.models import Facility
 from bhawan_app.serializers.timing import TimingSerializer
 
 Hostel = swapper.load_model('Kernel', 'Residence')
@@ -35,15 +35,20 @@ class FacilitySerializer(serializers.ModelSerializer):
         timing_serializer.is_valid(raise_exception=True)
 
         hostel_code = self.context['hostel__code']
-        hostel = Hostel.objects.get(code=hostel_code) #TO be seen
-        timing_objects = timing_serializer.save()
-        name = self.context['name']
-        facility = Facility.objects.create(
-            **validated_data,
-            hostel=hostel,
-            name=name,
-        )
+        try:
+            hostel = Hostel.objects.get(code=hostel_code)
+        except Exception:
+            raise serializers.ValidationError('Wrong hostel code')
 
+        try:
+            facility = Facility.objects.create(
+                **validated_data,
+                hostel=hostel,
+            )
+        except Exception:
+            raise serializers.ValidationError('Wrong fields for facility.')
+        
+        timing_objects = timing_serializer.save()
         for timing in timing_objects:
             facility.timings.add(timing)
 

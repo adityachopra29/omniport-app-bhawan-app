@@ -27,3 +27,7 @@ class EventViewset(
 
         return queryset
     
+    def get_serializer_context(self):
+        return {
+            "hostel__code": self.kwargs['hostel__code'],
+        } 
