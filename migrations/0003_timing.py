@@ -7,7 +7,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('bhawan_app', '0006_hosteladmin'),
+        ('bhawan_app', '0002_contact'),
     ]
 
     operations = [

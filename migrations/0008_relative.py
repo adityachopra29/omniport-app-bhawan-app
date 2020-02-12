@@ -9,7 +9,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.KERNEL_PERSON_MODEL),
-        ('bhawan_app', '0007_timing'),
+        ('bhawan_app', '0007_facility'),
     ]
 
     operations = [
@@ -22,7 +22,6 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(max_length=50)),
                 ('relation', models.CharField(max_length=50)),
                 ('booking', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='bhawan_app.RoomBooking')),
-                ('person', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.KERNEL_PERSON_MODEL)),
             ],
             options={
                 'abstract': False,

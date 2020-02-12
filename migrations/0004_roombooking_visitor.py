@@ -10,7 +10,7 @@ class Migration(migrations.Migration):
     dependencies = [
         migrations.swappable_dependency(settings.KERNEL_PERSON_MODEL),
         migrations.swappable_dependency(settings.KERNEL_RESIDENCE_MODEL),
-        ('bhawan_app', '0003_facility'),
+        ('bhawan_app', '0003_timing'),
     ]
 
     operations = [
