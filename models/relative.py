@@ -13,16 +13,13 @@ class Relative(Model):
     name = models.CharField(
         max_length=50,
     )
-    person = models.ForeignKey(
-        to=swapper.get_model_name('Kernel', 'Person'),
-        on_delete=models.CASCADE,
-    )
     relation = models.CharField(
         max_length=50,
     )
     booking = models.ForeignKey(
         RoomBooking, 
         on_delete=models.CASCADE,
+        related_name='relative',
     )
 
     def __str__(self):
@@ -31,4 +28,4 @@ class Relative(Model):
         :return: the string representation of the model
         """
 
-        return f"{self.person.name}'s {self.relation}"
+        return f"{self.person.full_name}'s {self.relation}"

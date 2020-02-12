@@ -1,8 +1,9 @@
+import swapper
 from rest_framework import viewsets, mixins
+from rest_framework.permissions import IsAuthenticated
 
 from bhawan_app.models import Facility
 from bhawan_app.serializers.facility import FacilitySerializer
-
 
 class FacilityViewset(
     mixins.ListModelMixin,
@@ -15,6 +16,7 @@ class FacilityViewset(
     """
 
     serializer_class = FacilitySerializer
+    permission_classes = [IsAuthenticated, ]
 
     def get_queryset(self):
         """
@@ -27,11 +29,7 @@ class FacilityViewset(
 
         return queryset
 
-    def create(self, request, hostel__code):
-        serializer = self.get_serializer(data=request.data)
-        print(serializer)
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
-    
+    def get_serializer_context(self):
+        return {
+            "hostel__code": self.kwargs['hostel__code'],
+        }

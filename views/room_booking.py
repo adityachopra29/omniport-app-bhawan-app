@@ -31,6 +31,14 @@ class RoomBookingViewset(viewsets.ModelViewSet):
         )
         return queryset
 
+
+    def get_serializer_context(self):
+        return {
+            "hostel__code": self.kwargs['hostel__code'],
+            "person": self.request.person,
+        }
+
+
     def list(self, request, hostel__code):
         """
         List all the bookings according to permissions

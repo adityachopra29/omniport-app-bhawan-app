@@ -15,7 +15,7 @@ class RelativeSerializer(serializers.ModelSerializer):
 
         model = Relative
         fields = [
+            'id',
             'name',
-            'person',
             'relation',
         ]
