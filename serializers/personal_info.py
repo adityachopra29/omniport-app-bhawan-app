@@ -7,7 +7,7 @@ from formula_one.mixins.period_mixin import ActiveStatus
 
 from bhawan_app.managers.get_hostel_admin import get_hostel_admin
 
-ResidentialInformation = swapper.load_model('Kernel', 'ResidentialInformation')
+ResidentialInformation = swapper.load_model('kernel', 'ResidentialInformation')
 
 
 class PersonalInfoSerializer(serializers.ModelSerializer):

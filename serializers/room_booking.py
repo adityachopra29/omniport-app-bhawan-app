@@ -3,9 +3,10 @@ import swapper
 from rest_framework import serializers
 
 from bhawan_app.models import RoomBooking
-from bhawan_app.serializers.relative import RelativeSerializer
+from bhawan_app.serializers.visitor import VisitorSerializer
 
-Hostel = swapper.load_model('Kernel', 'Residence')
+Hostel = swapper.load_model('kernel', 'Residence')
+
 
 class RoomBookingSerializer(serializers.ModelSerializer):
     """
@@ -16,7 +17,7 @@ class RoomBookingSerializer(serializers.ModelSerializer):
         source='person.full_name',
         read_only=True,
     )
-    relative = RelativeSerializer(
+    visitor = VisitorSerializer(
         many=True,
     )
 
@@ -28,26 +29,22 @@ class RoomBookingSerializer(serializers.ModelSerializer):
             'status',
             'requested_from',
             'requested_till',
-            'booked_by_room_no',
-            'relative',
+            'visitor',
         ]
-        # extra_kwargs = {
-        #   'booked_by_room_no':{'read_only': True} But no available in db
-        # }
 
     def create(self, validated_data):
         """
-        Get relative field
+        Get visitor field
         """
-        relatives = validated_data.pop('relative')
-        relatives_serializer = RelativeSerializer(data=relatives, many=True)
+        visitors = validated_data.pop('visitor')
+        visitors_serializer = VisitorSerializer(data=visitors, many=True)
 
         """
         Get hostel, hostel__code from request url using context from views
         """
         hostel_code = self.context['hostel__code']
         hostel = Hostel.objects.get(code=hostel_code)
-        relatives_serializer.is_valid(raise_exception=True)
+        visitors_serializer.is_valid(raise_exception=True)
 
         """
         Get authenticated user and make a RoomBooking instance
@@ -60,11 +57,11 @@ class RoomBookingSerializer(serializers.ModelSerializer):
         )
 
         """
-        Populate the relatives with current booking and authenticated user
+        Populate the Visitors with current booking and authenticated user
         """
-        for relative in relatives_serializer.validated_data:
-            relative['booking'] = room_booking
+        for visitor in visitors_serializer.validated_data:
+            visitor['booking'] = room_booking
 
-        relatives_serializer.save()
+        visitors_serializer.save()
 
         return room_booking

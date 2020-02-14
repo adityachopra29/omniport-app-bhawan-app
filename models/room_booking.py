@@ -25,7 +25,6 @@ class RoomBooking(Model):
     )
     requested_from = models.DateField()
     requested_till = models.DateField()
-    booked_by_room_no = models.PositiveIntegerField()
 
     def __str__(self):
         """

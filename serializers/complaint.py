@@ -39,10 +39,7 @@ class ComplaintSerializer(serializers.ModelSerializer):
         }
 
     def create(self, validated_data):
-        Hostel = swapper.load_model('Kernel', 'Residence')
-        print("*"*50)
-        print(self.context)
-        print("*"*50)
+        Hostel = swapper.load_model('kernel', 'Residence')
         hostel_code = self.context['hostel__code']
         try:
             hostel = Hostel.objects.get(code=hostel_code)
