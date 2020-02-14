@@ -6,7 +6,7 @@ from bhawan_app.views.contact import ContactViewset
 from bhawan_app.views.facility import FacilityViewset
 from bhawan_app.views.complaint import ComplaintViewset
 from bhawan_app.views.room_booking import RoomBookingViewset
-from bhawan_app.views.whoami import WhoAmIViewset
+from bhawan_app.views.personal_info import PersonalInfoView
 from bhawan_app.views.event import EventViewset
 
 
@@ -46,22 +46,11 @@ router.register(
 )
 
 urlpatterns = [
-    
     path(
-        'whoami',
-        WhoAmIViewset.as_view({
-            'get': 'retrieve',
-        }),
-        name='whoami',
+        'personal_info/',
+        PersonalInfoView.as_view(),
+        name='personal_info',
     ),
-    path(
-        'who_am_i',
-        WhoAmIViewset.as_view({
-            'get': 'retrieve',
-        }),
-        name='who_am_i',
-    )
-
 ]
 
 
