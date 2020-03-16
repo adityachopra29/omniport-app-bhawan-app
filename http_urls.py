@@ -1,34 +1,57 @@
-from django.urls import path
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
 
-from bhawan_app.views.hostel_profile import (
-    HostelProfileListView,
-    HostelProfileDetailView,
-)
-from bhawan_app.views.hostel_contact import HostelContactListView
+from bhawan_app.views.profile import ProfileViewset
+from bhawan_app.views.contact import ContactViewset
+from bhawan_app.views.facility import FacilityViewset
+from bhawan_app.views.complaint import ComplaintViewset
+from bhawan_app.views.room_booking import RoomBookingViewset
+from bhawan_app.views.personal_info import PersonalInfoView
+from bhawan_app.views.event import EventViewset
 
-from bhawan_app.views.hostel_facility import HostelFacilityListView
 
 app_name = 'bhawan_app'
 
+router = DefaultRouter()
+
+router.register(
+    r'complaint/(?P<hostel__code>[\w\-]+)',
+    ComplaintViewset,
+    basename='complaint',
+)
+router.register(
+    r'room_booking/(?P<hostel__code>[\w\-]+)',
+    RoomBookingViewset,
+    basename='room_booking',
+)
+router.register(
+    r'facility/(?P<hostel__code>[\w\-]+)',
+    FacilityViewset,
+    basename='facility',
+)
+router.register(
+    r'profile/(?P<hostel__code>[\w\-]+)',
+    ProfileViewset,
+    basename='profle',
+)
+router.register(
+    r'contact/(?P<hostel__code>[\w\-]+)',
+    ContactViewset,
+    basename='contact',
+)
+router.register(
+    r'event/(?P<hostel__code>[\w\-]+)',
+    EventViewset,
+    basename='event',
+)
+
 urlpatterns = [
     path(
-        'hostel_profile/',
-        HostelProfileListView.as_view(),
-        name='hostel_profile_list',
-    ),
-    path(
-        'hostel_profile/<hostel__code>',
-        HostelProfileDetailView.as_view(),
-        name='hostel_profle_detail',
-    ),
-    path(
-        'hostel_contact/<hostel__code>',
-        HostelContactListView.as_view(),
-        name='hostel_contact_detail',
-    ),
-    path(
-        'hostel_facility/<hostel__code>',
-        HostelFacilityListView.as_view(),
-        name='hostel_facility_list',
+        'personal_info/',
+        PersonalInfoView.as_view(),
+        name='personal_info',
     ),
 ]
+
+
+urlpatterns += router.urls

@@ -3,12 +3,12 @@ from rest_framework import serializers
 from formula_one.serializers.generics.contact_information import (
     ContactInformationSerializer,
 )
-from bhawan_app.models import HostelContact
+from bhawan_app.models import Contact
 
 
-class HostelContactSerializer(serializers.ModelSerializer):
+class ContactSerializer(serializers.ModelSerializer):
     """
-    Serializer for HostelContact objects
+    Serializer for Contact objects
     """
 
     person = serializers.CharField(
@@ -24,11 +24,12 @@ class HostelContactSerializer(serializers.ModelSerializer):
 
     class Meta:
         """
-        Meta class for HostelContactSerializer
+        Meta class for ContactSerializer
         """
 
-        model = HostelContact
+        model = Contact
         fields = [
+            'id',
             'person',
             'designation_name',
             'contact_information',

@@ -3,24 +3,35 @@ from django.db import models
 import swapper
 from formula_one.models.base import Model
 from formula_one.utils.upload_to import UploadTo
+from bhawan_app.models import Timing
 
 
-class HostelProfile(Model):
+class Facility(Model):
     """
-    This model contains profile information of a hostel in an institute
+    This model contains information about a facility of a hostel
     """
 
-    hostel = models.OneToOneField(
+    hostel = models.ForeignKey(
         to=swapper.get_model_name('kernel', 'Residence'),
         on_delete=models.CASCADE,
     )
-    description = models.TextField()
+    name = models.CharField(
+        max_length=63,
+        blank=False,
+        null=False,
+    )
+    description = models.TextField(
+        blank=True,
+        null=True,
+    )
     display_picture = models.ImageField(
         upload_to=UploadTo('bhawan_app', 'hostel'),
-    )
-    homepage_url = models.URLField(
+        max_length=255,
         blank=True,
-        verbose_name='Homepage URL',
+        null=True,
+    )
+    timings = models.ManyToManyField(
+        Timing,
     )
 
     def __str__(self):
@@ -29,12 +40,12 @@ class HostelProfile(Model):
         :return: the string representation of the model
         """
 
-        hostel = self.hostel
-        return f'{hostel}'
+        name = self.name
+        return f'{name}'
 
     class Meta:
         """
-        Meta class for HostelProfile
+        Meta class for Facility
         """
 
-        verbose_name_plural = 'hostel profile'
+        verbose_name_plural = 'facilities'

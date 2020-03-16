@@ -1,11 +1,24 @@
 from omniport.admin.site import omnipotence
 
 from bhawan_app.models import (
-    HostelProfile,
-    HostelContact,
-    HostelFacility,
+    Profile,
+    Contact,
+    Facility,
+    RoomBooking,
+    Complaint,
+    Timing,
+    Visitor,
+    Event,
 )
 
-omnipotence.register(HostelProfile)
-omnipotence.register(HostelContact)
-omnipotence.register(HostelFacility)
+from bhawan_app.models.roles import HostelAdmin
+
+omnipotence.register(Profile)
+omnipotence.register(Contact)
+omnipotence.register(Facility)
+omnipotence.register(RoomBooking)
+omnipotence.register(Complaint)
+omnipotence.register(HostelAdmin)
+omnipotence.register(Timing)
+omnipotence.register(Visitor)
+omnipotence.register(Event)

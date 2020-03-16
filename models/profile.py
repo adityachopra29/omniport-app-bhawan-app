@@ -5,29 +5,22 @@ from formula_one.models.base import Model
 from formula_one.utils.upload_to import UploadTo
 
 
-class HostelFacility(Model):
+class Profile(Model):
     """
-    This model contains information about a facility of a hostel
+    This model contains profile information of a hostel in an institute
     """
 
-    hostel = models.ForeignKey(
+    hostel = models.OneToOneField(
         to=swapper.get_model_name('kernel', 'Residence'),
         on_delete=models.CASCADE,
     )
-    name = models.CharField(
-        max_length=63,
-        blank=False,
-        null=False,
-    )
-    description = models.TextField(
-        blank=True,
-        null=True,
-    )
+    description = models.TextField()
     display_picture = models.ImageField(
         upload_to=UploadTo('bhawan_app', 'hostel'),
-        max_length=255,
+    )
+    homepage_url = models.URLField(
         blank=True,
-        null=True,
+        verbose_name='Homepage URL',
     )
 
     def __str__(self):
@@ -36,12 +29,5 @@ class HostelFacility(Model):
         :return: the string representation of the model
         """
 
-        name = self.name
-        return f'{name}'
-
-    class Meta:
-        """
-        Meta class for HostelFacility
-        """
-
-        verbose_name_plural = 'hostel facilities'
+        hostel = self.hostel
+        return f'{hostel}'
