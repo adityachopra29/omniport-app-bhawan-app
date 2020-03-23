@@ -10,11 +10,7 @@ class Migration(migrations.Migration):
     dependencies = [
         migrations.swappable_dependency(settings.KERNEL_PERSON_MODEL),
         migrations.swappable_dependency(settings.KERNEL_RESIDENCE_MODEL),
-<<<<<<< HEAD
         ('bhawan_app', '0004_roombooking'),
-=======
-        ("bhawan_app", "0004_roombooking_visitor"),
->>>>>>> Linting changes.
     ]
 
     operations = [

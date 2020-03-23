@@ -2,7 +2,7 @@ import swapper
 
 from rest_framework import serializers
 
-from bhawan_app.managers.get_hostel_admin import get_hostel_admin
+from bhawan_app.managers.services import is_hostel_admin
 
 ResidentialInformation = swapper.load_model("Kernel", "ResidentialInformation")
 
@@ -30,6 +30,4 @@ class WhoAmISerializer(serializers.ModelSerializer):
         ]
 
     def get_is_admin(self, obj):
-        if get_hostel_admin(obj.person) is None:
-            return False
-        return True
+        return is_hostel_admin(obj.person)

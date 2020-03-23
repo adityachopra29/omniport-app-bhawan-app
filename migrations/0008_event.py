@@ -10,11 +10,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.KERNEL_RESIDENCE_MODEL),
-<<<<<<< HEAD:migrations/0008_event.py
         ('bhawan_app', '0007_facility'),
-=======
-        ("bhawan_app", "0008_relative"),
->>>>>>> Linting changes.:migrations/0009_event.py
     ]
 
     operations = [

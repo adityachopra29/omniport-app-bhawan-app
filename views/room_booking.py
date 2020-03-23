@@ -4,9 +4,10 @@ from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
 
 from bhawan_app.models import RoomBooking
-from bhawan_app.permissions.is_owner_or_hostel_admin import IsOwnerOrHostelAdmin
+from bhawan_app.permissions.is_owner import IsOwner
+from bhawan_app.permissions.is_hostel_admin import IsHostelAdmin
 from bhawan_app.serializers.room_booking import RoomBookingSerializer
-from bhawan_app.managers.get_hostel_admin import get_hostel_admin
+from bhawan_app.managers.services import get_hostel_admin
 
 
 class RoomBookingViewset(viewsets.ModelViewSet):
@@ -18,7 +19,7 @@ class RoomBookingViewset(viewsets.ModelViewSet):
     serializer_class = RoomBookingSerializer
     permission_classes = [
         IsAuthenticated,
-        IsOwnerOrHostelAdmin,
+        IsOwner|IsHostelAdmin,
     ]
 
     def get_queryset(self):
