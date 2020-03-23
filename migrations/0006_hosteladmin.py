@@ -10,24 +10,60 @@ class Migration(migrations.Migration):
     dependencies = [
         migrations.swappable_dependency(settings.KERNEL_RESIDENCE_MODEL),
         migrations.swappable_dependency(settings.KERNEL_PERSON_MODEL),
-        ('bhawan_app', '0005_complaint'),
+        ("bhawan_app", "0005_complaint"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='HostelAdmin',
+            name="HostelAdmin",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('datetime_created', models.DateTimeField(auto_now_add=True)),
-                ('datetime_modified', models.DateTimeField(auto_now=True)),
-                ('start_date', models.DateField()),
-                ('end_date', models.DateField(blank=True, null=True)),
-                ('designation', models.CharField(choices=[('aw', 'Assistant warden'), ('cw', 'Chief warden'), ('sup', 'Supervisor'), ('war', 'Warden'), ('waw', 'Warden wellness'), ('bscy', 'Bhawan secretary'), ('cscy', 'Cultural secretary'), ('mscy', 'Maintenance secretary'), ('mescy', 'Mess secretary'), ('sscy', 'Sports secretary'), ('tscy', 'Technical secretary')], max_length=5)),
-                ('hostel', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.KERNEL_RESIDENCE_MODEL)),
-                ('person', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.KERNEL_PERSON_MODEL)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("datetime_created", models.DateTimeField(auto_now_add=True)),
+                ("datetime_modified", models.DateTimeField(auto_now=True)),
+                ("start_date", models.DateField()),
+                ("end_date", models.DateField(blank=True, null=True)),
+                (
+                    "designation",
+                    models.CharField(
+                        choices=[
+                            ("aw", "Assistant warden"),
+                            ("cw", "Chief warden"),
+                            ("sup", "Supervisor"),
+                            ("war", "Warden"),
+                            ("waw", "Warden wellness"),
+                            ("bscy", "Bhawan secretary"),
+                            ("cscy", "Cultural secretary"),
+                            ("mscy", "Maintenance secretary"),
+                            ("mescy", "Mess secretary"),
+                            ("sscy", "Sports secretary"),
+                            ("tscy", "Technical secretary"),
+                        ],
+                        max_length=5,
+                    ),
+                ),
+                (
+                    "hostel",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.KERNEL_RESIDENCE_MODEL,
+                    ),
+                ),
+                (
+                    "person",
+                    models.OneToOneField(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.KERNEL_PERSON_MODEL,
+                    ),
+                ),
             ],
-            options={
-                'abstract': False,
-            },
+            options={"abstract": False,},
         ),
     ]

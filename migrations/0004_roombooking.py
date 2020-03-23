@@ -10,13 +10,14 @@ class Migration(migrations.Migration):
     dependencies = [
         migrations.swappable_dependency(settings.KERNEL_PERSON_MODEL),
         migrations.swappable_dependency(settings.KERNEL_RESIDENCE_MODEL),
-        ('bhawan_app', '0003_timing'),
+        ("bhawan_app", "0003_timing"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='RoomBooking',
+            name="RoomBooking",
             fields=[
+<<<<<<< HEAD:migrations/0004_roombooking.py
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('datetime_created', models.DateTimeField(auto_now_add=True)),
                 ('datetime_modified', models.DateTimeField(auto_now=True)),
@@ -25,9 +26,49 @@ class Migration(migrations.Migration):
                 ('requested_till', models.DateField()),
                 ('person', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.KERNEL_PERSON_MODEL)),
                 ('hostel', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.KERNEL_RESIDENCE_MODEL)),
+=======
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("datetime_created", models.DateTimeField(auto_now_add=True)),
+                ("datetime_modified", models.DateTimeField(auto_now=True)),
+                (
+                    "status",
+                    models.CharField(
+                        choices=[
+                            ("apr", "Approved"),
+                            ("pen", "Pending"),
+                            ("rej", "Rejected"),
+                        ],
+                        default="pen",
+                        max_length=10,
+                    ),
+                ),
+                ("requested_from", models.DateField()),
+                ("requested_till", models.DateField()),
+                ("booked_by_room_no", models.PositiveIntegerField()),
+                (
+                    "person",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.KERNEL_PERSON_MODEL,
+                    ),
+                ),
+                (
+                    "hostel",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.KERNEL_RESIDENCE_MODEL,
+                    ),
+                ),
+>>>>>>> Linting changes.:migrations/0004_roombooking_visitor.py
             ],
-            options={
-                'abstract': False,
-            },
+            options={"abstract": False,},
         ),
     ]

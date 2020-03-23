@@ -11,17 +11,11 @@ class Profile(Model):
     """
 
     hostel = models.OneToOneField(
-        to=swapper.get_model_name('kernel', 'Residence'),
-        on_delete=models.CASCADE,
+        to=swapper.get_model_name("kernel", "Residence"), on_delete=models.CASCADE,
     )
     description = models.TextField()
-    display_picture = models.ImageField(
-        upload_to=UploadTo('bhawan_app', 'hostel'),
-    )
-    homepage_url = models.URLField(
-        blank=True,
-        verbose_name='Homepage URL',
-    )
+    display_picture = models.ImageField(upload_to=UploadTo("bhawan_app", "hostel"),)
+    homepage_url = models.URLField(blank=True, verbose_name="Homepage URL",)
 
     def __str__(self):
         """
@@ -30,4 +24,4 @@ class Profile(Model):
         """
 
         hostel = self.hostel
-        return f'{hostel}'
+        return f"{hostel}"

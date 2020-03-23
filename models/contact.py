@@ -12,23 +12,19 @@ class Contact(Model):
     """
 
     hostel = models.ForeignKey(
-        to=swapper.get_model_name('kernel', 'Residence'),
-        on_delete=models.CASCADE,
+        to=swapper.get_model_name("kernel", "Residence"), on_delete=models.CASCADE,
     )
     person = models.ForeignKey(
-        to=swapper.get_model_name('kernel', 'Person'),
-        on_delete=models.CASCADE,
+        to=swapper.get_model_name("kernel", "Person"), on_delete=models.CASCADE,
     )
     designation = models.CharField(
-        max_length=5,
-        unique=True,
-        choices=designations.DESIGNATIONS,
+        max_length=5, unique=True, choices=designations.DESIGNATIONS,
     )
     contact_information = contenttypes_fields.GenericRelation(
-        to='formula_one.ContactInformation',
-        related_query_name='hostel_contact',
-        content_type_field='entity_content_type',
-        object_id_field='entity_object_id',
+        to="formula_one.ContactInformation",
+        related_query_name="hostel_contact",
+        content_type_field="entity_content_type",
+        object_id_field="entity_object_id",
     )
 
     @property
@@ -49,4 +45,4 @@ class Contact(Model):
         hostel = self.hostel
         person = self.person
         designation = self.designation_name
-        return f'{hostel}: {person}, {designation}'
+        return f"{hostel}: {person}, {designation}"

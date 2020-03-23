@@ -10,39 +10,29 @@ from bhawan_app.views.personal_info import PersonalInfoView
 from bhawan_app.views.event import EventViewset
 
 
-app_name = 'bhawan_app'
+app_name = "bhawan_app"
 
 router = DefaultRouter()
 
 router.register(
-    r'complaint/(?P<hostel__code>[\w\-]+)',
-    ComplaintViewset,
-    basename='complaint',
+    r"complaint/(?P<hostel__code>[\w\-]+)", ComplaintViewset, basename="complaint",
 )
 router.register(
-    r'room_booking/(?P<hostel__code>[\w\-]+)',
+    r"room_booking/(?P<hostel__code>[\w\-]+)",
     RoomBookingViewset,
-    basename='room_booking',
+    basename="room_booking",
 )
 router.register(
-    r'facility/(?P<hostel__code>[\w\-]+)',
-    FacilityViewset,
-    basename='facility',
+    r"facility/(?P<hostel__code>[\w\-]+)", FacilityViewset, basename="facility",
 )
 router.register(
-    r'profile/(?P<hostel__code>[\w\-]+)',
-    ProfileViewset,
-    basename='profle',
+    r"profile/(?P<hostel__code>[\w\-]+)", ProfileViewset, basename="profle",
 )
 router.register(
-    r'contact/(?P<hostel__code>[\w\-]+)',
-    ContactViewset,
-    basename='contact',
+    r"contact/(?P<hostel__code>[\w\-]+)", ContactViewset, basename="contact",
 )
 router.register(
-    r'event/(?P<hostel__code>[\w\-]+)',
-    EventViewset,
-    basename='event',
+    r"event/(?P<hostel__code>[\w\-]+)", EventViewset, basename="event",
 )
 
 urlpatterns = [

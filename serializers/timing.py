@@ -15,8 +15,8 @@ class TimingSerializer(serializers.ModelSerializer):
 
         model = Timing
         fields = [
-            'day',
-            'start',
-            'end',
-            'description',
+            "day",
+            "start",
+            "end",
+            "description",
         ]

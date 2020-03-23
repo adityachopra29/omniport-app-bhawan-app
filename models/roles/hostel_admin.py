@@ -11,13 +11,9 @@ class HostelAdmin(AbstractRole):
     This model holds information pertaining to the administrator of a hostel
     """
 
-    designation = models.CharField(
-        max_length=5,
-        choices=designations.DESIGNATIONS,
-    )
+    designation = models.CharField(max_length=5, choices=designations.DESIGNATIONS,)
     hostel = models.ForeignKey(
-        to=swapper.get_model_name('kernel', 'Residence'),
-        on_delete=models.CASCADE,
+        to=swapper.get_model_name("kernel", "Residence"), on_delete=models.CASCADE,
     )
 
     def __str__(self):
@@ -29,4 +25,4 @@ class HostelAdmin(AbstractRole):
         person = self.person
         designation = self.get_designation_display()
         hostel = self.hostel.name
-        return f'{person} - {designation}, {hostel}'
+        return f"{person} - {designation}, {hostel}"

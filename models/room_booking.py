@@ -11,20 +11,18 @@ class RoomBooking(Model):
     """
 
     hostel = models.ForeignKey(
-        to=swapper.get_model_name('kernel', 'Residence'),
-        on_delete=models.CASCADE,
+        to=swapper.get_model_name("kernel", "Residence"), on_delete=models.CASCADE,
     )
     person = models.ForeignKey(
-        to=swapper.get_model_name('Kernel', 'Person'),
-        on_delete=models.CASCADE
+        to=swapper.get_model_name("Kernel", "Person"), on_delete=models.CASCADE
     )
     status = models.CharField(
-        max_length=10,
-        choices=statuses.STATUSES,
-        default=statuses.PENDING,
+        max_length=10, choices=statuses.STATUSES, default=statuses.PENDING,
     )
     requested_from = models.DateField()
     requested_till = models.DateField()
+    booked_by_room_no = models.PositiveIntegerField()
+    forwarded = models.BooleanField(default=False)
 
     def __str__(self):
         """

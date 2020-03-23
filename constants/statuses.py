@@ -2,11 +2,11 @@
 Various statuses.
 """
 
-APPROVED = 'apr'
-PENDING = 'pen'
-REJECTED = 'rej'
+APPROVED = "apr"
+PENDING = "pen"
+REJECTED = "rej"
 STATUSES = (
-    (APPROVED, 'Approved'),
-    (PENDING, 'Pending'),
-    (REJECTED, 'Rejected'),
+    (APPROVED, "Approved"),
+    (PENDING, "Pending"),
+    (REJECTED, "Rejected"),
 )

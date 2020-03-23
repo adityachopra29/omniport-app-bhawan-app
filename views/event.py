@@ -22,12 +22,12 @@ class EventViewset(
         :return: the queryset of events of a hostel
         """
 
-        hostel_code = self.kwargs['hostel__code']
+        hostel_code = self.kwargs["hostel__code"]
         queryset = Event.objects.filter(hostel__code=hostel_code)
 
         return queryset
-    
+
     def get_serializer_context(self):
         return {
-            "hostel__code": self.kwargs['hostel__code'],
-        } 
+            "hostel__code": self.kwargs["hostel__code"],
+        }

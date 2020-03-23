@@ -9,11 +9,16 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.KERNEL_PERSON_MODEL),
+<<<<<<< HEAD:migrations/0009_visitor.py
         ('bhawan_app', '0008_event'),
+=======
+        ("bhawan_app", "0007_facility"),
+>>>>>>> Linting changes.:migrations/0008_relative.py
     ]
 
     operations = [
         migrations.CreateModel(
+<<<<<<< HEAD:migrations/0009_visitor.py
             name='Visitor',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
@@ -22,9 +27,31 @@ class Migration(migrations.Migration):
                 ('relation', models.CharField(max_length=50)),
                 ('booking', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='vistor', to='bhawan_app.RoomBooking')),
                 ('person', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.KERNEL_PERSON_MODEL)),
+=======
+            name="Relative",
+            fields=[
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("datetime_created", models.DateTimeField(auto_now_add=True)),
+                ("datetime_modified", models.DateTimeField(auto_now=True)),
+                ("name", models.CharField(max_length=50)),
+                ("relation", models.CharField(max_length=50)),
+                (
+                    "booking",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="bhawan_app.RoomBooking",
+                    ),
+                ),
+>>>>>>> Linting changes.:migrations/0008_relative.py
             ],
-            options={
-                'abstract': False,
-            },
+            options={"abstract": False,},
         ),
     ]

@@ -10,27 +10,73 @@ class Migration(migrations.Migration):
     dependencies = [
         migrations.swappable_dependency(settings.KERNEL_PERSON_MODEL),
         migrations.swappable_dependency(settings.KERNEL_RESIDENCE_MODEL),
+<<<<<<< HEAD
         ('bhawan_app', '0004_roombooking'),
+=======
+        ("bhawan_app", "0004_roombooking_visitor"),
+>>>>>>> Linting changes.
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Complaint',
+            name="Complaint",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('datetime_created', models.DateTimeField(auto_now_add=True)),
-                ('datetime_modified', models.DateTimeField(auto_now=True)),
-                ('complaint_type', models.CharField(choices=[('ele', 'Electric'), ('toi', 'Toilet'), ('car', 'Carpentry'), ('cle', 'Cleaning'), ('oth', 'Other')], default='oth', max_length=10)),
-                ('status', models.CharField(choices=[('apr', 'Approved'), ('pen', 'Pending'), ('rej', 'Rejected')], default='pen', max_length=10)),
-                ('description', models.TextField()),
-                ('available_from', models.TimeField()),
-                ('available_till', models.TimeField()),
-                ('room_no', models.PositiveIntegerField()),
-                ('person', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.KERNEL_PERSON_MODEL)),
-                ('hostel', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.KERNEL_RESIDENCE_MODEL)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("datetime_created", models.DateTimeField(auto_now_add=True)),
+                ("datetime_modified", models.DateTimeField(auto_now=True)),
+                (
+                    "complaint_type",
+                    models.CharField(
+                        choices=[
+                            ("ele", "Electric"),
+                            ("toi", "Toilet"),
+                            ("car", "Carpentry"),
+                            ("cle", "Cleaning"),
+                            ("oth", "Other"),
+                        ],
+                        default="oth",
+                        max_length=10,
+                    ),
+                ),
+                (
+                    "status",
+                    models.CharField(
+                        choices=[
+                            ("apr", "Approved"),
+                            ("pen", "Pending"),
+                            ("rej", "Rejected"),
+                        ],
+                        default="pen",
+                        max_length=10,
+                    ),
+                ),
+                ("description", models.TextField()),
+                ("available_from", models.TimeField()),
+                ("available_till", models.TimeField()),
+                ("room_no", models.PositiveIntegerField()),
+                (
+                    "person",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.KERNEL_PERSON_MODEL,
+                    ),
+                ),
+                (
+                    "hostel",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.KERNEL_RESIDENCE_MODEL,
+                    ),
+                ),
             ],
-            options={
-                'abstract': False,
-            },
+            options={"abstract": False,},
         ),
     ]

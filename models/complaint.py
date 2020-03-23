@@ -11,34 +11,27 @@ class Complaint(Model):
     """
 
     hostel = models.ForeignKey(
-        to=swapper.get_model_name('kernel', 'Residence'),
-        on_delete=models.CASCADE,
+        to=swapper.get_model_name("kernel", "Residence"), on_delete=models.CASCADE,
     )
 
     person = models.ForeignKey(
-        to=swapper.get_model_name('Kernel', 'Person'),
-        on_delete=models.CASCADE,
+        to=swapper.get_model_name("Kernel", "Person"), on_delete=models.CASCADE,
     )
 
     complaint_type = models.CharField(
         max_length=10,
         choices=complaint_types.COMPLAINT_TYPES,
-        default=complaint_types.OTHER
+        default=complaint_types.OTHER,
     )
 
     status = models.CharField(
-        max_length=10,
-        choices=statuses.STATUSES,
-        default=statuses.PENDING
+        max_length=10, choices=statuses.STATUSES, default=statuses.PENDING
     )
-
     description = models.TextField()
-
     available_from = models.TimeField()
-
     available_till = models.TimeField()
-
     room_no = models.PositiveIntegerField()
+    forwarded = models.BooleanField(default=False)
 
     def __str__(self):
         """
@@ -46,4 +39,4 @@ class Complaint(Model):
         :return: the string representation of the model
         """
 
-        return f'{self.complaint_type} issue in {self.room_no}'
+        return f"{self.complaint_type} issue in {self.room_no}"

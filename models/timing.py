@@ -10,18 +10,10 @@ class Timing(Model):
     """
 
     # Relationship with the facility or event entity
-    day = models.CharField(
-        max_length=50,
-        choices=days.DAYS,
-    )
+    day = models.CharField(max_length=50, choices=days.DAYS,)
     start = models.TimeField()
-    end = models.TimeField(
-        null=True,
-        blank=True,
-    )
-    description = models.CharField(
-        max_length=50,
-    )
+    end = models.TimeField(null=True, blank=True,)
+    description = models.CharField(max_length=50,)
 
     def __str__(self):
         """

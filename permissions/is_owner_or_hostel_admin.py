@@ -30,5 +30,6 @@ class IsOwnerOrHostelAdmin(permissions.BasePermission):
         :return: if the the person is allowed or not
         """
 
-        return obj.person == request.user.person or \
-            self.is_hostel_admin(request.user.person)
+        return obj.person == request.user.person or self.is_hostel_admin(
+            request.user.person
+        )

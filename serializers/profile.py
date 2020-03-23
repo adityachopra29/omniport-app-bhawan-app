@@ -8,7 +8,7 @@ class ProfileSerializer(serializers.ModelSerializer):
     Serializer for Profile objects
     """
 
-    hostel = serializers.CharField(source='hostel.name')
+    hostel = serializers.CharField(source="hostel.name")
 
     class Meta:
         """
@@ -17,9 +17,9 @@ class ProfileSerializer(serializers.ModelSerializer):
 
         model = Profile
         fields = [
-            'id',
-            'hostel',
-            'description',
-            'homepage_url',
-            'display_picture',
+            "id",
+            "hostel",
+            "description",
+            "homepage_url",
+            "display_picture",
         ]

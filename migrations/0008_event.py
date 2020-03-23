@@ -10,25 +10,51 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.KERNEL_RESIDENCE_MODEL),
+<<<<<<< HEAD:migrations/0008_event.py
         ('bhawan_app', '0007_facility'),
+=======
+        ("bhawan_app", "0008_relative"),
+>>>>>>> Linting changes.:migrations/0009_event.py
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Event',
+            name="Event",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('datetime_created', models.DateTimeField(auto_now_add=True)),
-                ('datetime_modified', models.DateTimeField(auto_now=True)),
-                ('name', models.CharField(max_length=63)),
-                ('description', models.TextField(blank=True, null=True)),
-                ('display_picture', models.ImageField(blank=True, max_length=255, null=True, upload_to=formula_one.utils.upload_to.UploadTo('bhawan_app', 'hostel'))),
-                ('date', models.DateField()),
-                ('hostel', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.KERNEL_RESIDENCE_MODEL)),
-                ('timings', models.ManyToManyField(to='bhawan_app.Timing')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("datetime_created", models.DateTimeField(auto_now_add=True)),
+                ("datetime_modified", models.DateTimeField(auto_now=True)),
+                ("name", models.CharField(max_length=63)),
+                ("description", models.TextField(blank=True, null=True)),
+                (
+                    "display_picture",
+                    models.ImageField(
+                        blank=True,
+                        max_length=255,
+                        null=True,
+                        upload_to=formula_one.utils.upload_to.UploadTo(
+                            "bhawan_app", "hostel"
+                        ),
+                    ),
+                ),
+                ("date", models.DateField()),
+                (
+                    "hostel",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.KERNEL_RESIDENCE_MODEL,
+                    ),
+                ),
+                ("timings", models.ManyToManyField(to="bhawan_app.Timing")),
             ],
-            options={
-                'abstract': False,
-            },
+            options={"abstract": False,},
         ),
     ]

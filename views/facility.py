@@ -5,6 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from bhawan_app.models import Facility
 from bhawan_app.serializers.facility import FacilitySerializer
 
+
 class FacilityViewset(
     mixins.ListModelMixin,
     mixins.CreateModelMixin,
@@ -16,7 +17,9 @@ class FacilityViewset(
     """
 
     serializer_class = FacilitySerializer
-    permission_classes = [IsAuthenticated, ]
+    permission_classes = [
+        IsAuthenticated,
+    ]
 
     def get_queryset(self):
         """
@@ -24,12 +27,12 @@ class FacilityViewset(
         :return: the queryset of facilities of a hostel
         """
 
-        hostel = self.kwargs['hostel__code']
+        hostel = self.kwargs["hostel__code"]
         queryset = Facility.objects.filter(hostel__code=hostel)
 
         return queryset
 
     def get_serializer_context(self):
         return {
-            "hostel__code": self.kwargs['hostel__code'],
+            "hostel__code": self.kwargs["hostel__code"],
         }

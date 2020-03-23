@@ -4,9 +4,7 @@ from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
 
 from bhawan_app.models import RoomBooking
-from bhawan_app.permissions.is_owner_or_hostel_admin import (
-    IsOwnerOrHostelAdmin,
-)
+from bhawan_app.permissions.is_owner_or_hostel_admin import IsOwnerOrHostelAdmin
 from bhawan_app.serializers.room_booking import RoomBookingSerializer
 from bhawan_app.managers.get_hostel_admin import get_hostel_admin
 
@@ -18,7 +16,10 @@ class RoomBookingViewset(viewsets.ModelViewSet):
     """
 
     serializer_class = RoomBookingSerializer
-    permission_classes = [IsAuthenticated, IsOwnerOrHostelAdmin, ]
+    permission_classes = [
+        IsAuthenticated,
+        IsOwnerOrHostelAdmin,
+    ]
 
     def get_queryset(self):
         """
@@ -26,18 +27,14 @@ class RoomBookingViewset(viewsets.ModelViewSet):
         :return: the queryset of bookings grouped by a hostel
         """
 
-        queryset = RoomBooking.objects.filter(
-            hostel__code=self.kwargs['hostel__code'],
-        )
+        queryset = RoomBooking.objects.filter(hostel__code=self.kwargs["hostel__code"],)
         return queryset
-
 
     def get_serializer_context(self):
         return {
-            "hostel__code": self.kwargs['hostel__code'],
+            "hostel__code": self.kwargs["hostel__code"],
             "person": self.request.person,
         }
-
 
     def list(self, request, hostel__code):
         """

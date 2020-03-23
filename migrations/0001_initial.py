@@ -16,18 +16,40 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Profile',
+            name="Profile",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('datetime_created', models.DateTimeField(auto_now_add=True)),
-                ('datetime_modified', models.DateTimeField(auto_now=True)),
-                ('description', models.TextField()),
-                ('display_picture', models.ImageField(upload_to=formula_one.utils.upload_to.UploadTo('bhawan_app', 'hostel'))),
-                ('homepage_url', models.URLField(blank=True, verbose_name='Homepage URL')),
-                ('hostel', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.KERNEL_RESIDENCE_MODEL)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("datetime_created", models.DateTimeField(auto_now_add=True)),
+                ("datetime_modified", models.DateTimeField(auto_now=True)),
+                ("description", models.TextField()),
+                (
+                    "display_picture",
+                    models.ImageField(
+                        upload_to=formula_one.utils.upload_to.UploadTo(
+                            "bhawan_app", "hostel"
+                        )
+                    ),
+                ),
+                (
+                    "homepage_url",
+                    models.URLField(blank=True, verbose_name="Homepage URL"),
+                ),
+                (
+                    "hostel",
+                    models.OneToOneField(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.KERNEL_RESIDENCE_MODEL,
+                    ),
+                ),
             ],
-            options={
-                'abstract': False,
-            },
+            options={"abstract": False,},
         ),
     ]

@@ -22,7 +22,7 @@ class ContactViewset(
         :return: the queryset of contacts of a hostel
         """
 
-        hostel = self.kwargs['hostel__code']
+        hostel = self.kwargs["hostel__code"]
         queryset = Contact.objects.filter(hostel__code=hostel)
 
         return queryset

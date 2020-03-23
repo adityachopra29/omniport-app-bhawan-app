@@ -11,16 +11,11 @@ class ContactSerializer(serializers.ModelSerializer):
     Serializer for Contact objects
     """
 
-    person = serializers.CharField(
-        source='person.full_name',
-    )
+    person = serializers.CharField(source="person.full_name",)
     contact_information = ContactInformationSerializer(
-        source='person.contact_information',
-        many=True,
+        source="person.contact_information", many=True,
     )
-    display_picture = serializers.ImageField(
-        source='person.display_picture',
-    )
+    display_picture = serializers.ImageField(source="person.display_picture",)
 
     class Meta:
         """
@@ -29,9 +24,9 @@ class ContactSerializer(serializers.ModelSerializer):
 
         model = Contact
         fields = [
-            'id',
-            'person',
-            'designation_name',
-            'contact_information',
-            'display_picture',
+            "id",
+            "person",
+            "designation_name",
+            "contact_information",
+            "display_picture",
         ]

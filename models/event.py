@@ -13,25 +13,17 @@ class Event(Model):
     """
 
     hostel = models.ForeignKey(
-        to=swapper.get_model_name('kernel', 'Residence'),
-        on_delete=models.CASCADE,
+        to=swapper.get_model_name("kernel", "Residence"), on_delete=models.CASCADE,
     )
-    name = models.CharField(
-        max_length=63,
-    )
-    description = models.TextField(
-        blank=True,
-        null=True,
-    )
+    name = models.CharField(max_length=63,)
+    description = models.TextField(blank=True, null=True,)
     display_picture = models.ImageField(
-        upload_to=UploadTo('bhawan_app', 'hostel'),
+        upload_to=UploadTo("bhawan_app", "hostel"),
         max_length=255,
         blank=True,
         null=True,
     )
-    timings = models.ManyToManyField(
-        Timing,
-    )
+    timings = models.ManyToManyField(Timing,)
     date = models.DateField()
 
     def __str__(self):
@@ -41,4 +33,4 @@ class Event(Model):
         """
 
         name = self.name
-        return f'{name}'
+        return f"{name}"
