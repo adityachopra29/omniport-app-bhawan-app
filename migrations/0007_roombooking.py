@@ -10,7 +10,7 @@ class Migration(migrations.Migration):
     dependencies = [
         migrations.swappable_dependency(settings.KERNEL_PERSON_MODEL),
         migrations.swappable_dependency(settings.KERNEL_RESIDENCE_MODEL),
-        ("bhawan_app", "0003_timing"),
+        ("bhawan_app", "0006_facility"),
     ]
 
     operations = [
@@ -25,7 +25,9 @@ class Migration(migrations.Migration):
                 ('requested_till', models.DateField()),
                 ('person', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.KERNEL_PERSON_MODEL)),
                 ('hostel', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.KERNEL_RESIDENCE_MODEL)),
-                ("booked_by_room_no", models.PositiveIntegerField()),
+                ('forwarded', models.BooleanField(default=False)),
+                ('booked_by_room_no', models.PositiveIntegerField()),
+                
             ],
             options={"abstract": False,},
         ),

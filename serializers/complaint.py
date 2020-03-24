@@ -33,13 +33,8 @@ class ComplaintSerializer(serializers.ModelSerializer):
         }
 
     def create(self, validated_data):
-<<<<<<< HEAD
         Hostel = swapper.load_model('kernel', 'Residence')
         hostel_code = self.context['hostel__code']
-=======
-        Hostel = swapper.load_model("Kernel", "Residence")
-        hostel_code = self.context["hostel__code"]
->>>>>>> Linting changes.
         try:
             hostel = Hostel.objects.get(code=hostel_code)
         except Exception:

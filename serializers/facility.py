@@ -4,11 +4,7 @@ from rest_framework import serializers
 from bhawan_app.models import Facility
 from bhawan_app.serializers.timing import TimingSerializer
 
-<<<<<<< HEAD
 Hostel = swapper.load_model('kernel', 'Residence')
-=======
-Hostel = swapper.load_model("Kernel", "Residence")
->>>>>>> Linting changes.
 
 
 class FacilitySerializer(serializers.ModelSerializer):
@@ -46,11 +42,7 @@ class FacilitySerializer(serializers.ModelSerializer):
         try:
             facility = Facility.objects.create(**validated_data, hostel=hostel,)
         except Exception:
-<<<<<<< HEAD
             raise serializers.ValidationError('Wrong fields for facility.')
-=======
-            raise serializers.ValidationError("Wrong fields for facility.")
->>>>>>> Linting changes.
 
         timing_objects = timing_serializer.save()
         for timing in timing_objects:

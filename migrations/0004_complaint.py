@@ -10,7 +10,7 @@ class Migration(migrations.Migration):
     dependencies = [
         migrations.swappable_dependency(settings.KERNEL_PERSON_MODEL),
         migrations.swappable_dependency(settings.KERNEL_RESIDENCE_MODEL),
-        ('bhawan_app', '0004_roombooking'),
+        ('bhawan_app', '0003_timing'),
     ]
 
     operations = [
@@ -58,6 +58,7 @@ class Migration(migrations.Migration):
                 ("available_from", models.TimeField()),
                 ("available_till", models.TimeField()),
                 ("room_no", models.PositiveIntegerField()),
+                ("forwarded", models.BooleanField(default=False)),
                 (
                     "person",
                     models.ForeignKey(

@@ -10,7 +10,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.KERNEL_RESIDENCE_MODEL),
-        ("bhawan_app", "0006_hosteladmin"),
+        ("bhawan_app", "0005_hosteladmin"),
     ]
 
     operations = [
