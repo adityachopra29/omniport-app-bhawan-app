@@ -21,7 +21,7 @@ class WhoAmIViewset(
         IsAuthenticated,
     ]
     http_method_names = [
-        "get",
+        "GET",
     ]
 
     def retrieve(self, request, pk=None):
