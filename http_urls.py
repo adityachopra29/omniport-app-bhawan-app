@@ -15,24 +15,24 @@ app_name = "bhawan_app"
 router = DefaultRouter()
 
 router.register(
-    r"complaint/(?P<hostel__code>[\w\-]+)", ComplaintViewset, basename="complaint",
+    r"(?P<hostel__code>[\w\-]+)/complaint", ComplaintViewset, basename="complaint",
 )
 router.register(
-    r"room_booking/(?P<hostel__code>[\w\-]+)",
+    r"(?P<hostel__code>[\w\-]+)/room_booking",
     RoomBookingViewset,
     basename="room_booking",
 )
 router.register(
-    r"facility/(?P<hostel__code>[\w\-]+)", FacilityViewset, basename="facility",
+    r"(?P<hostel__code>[\w\-]+)/facility", FacilityViewset, basename="facility",
 )
 router.register(
-    r"profile/(?P<hostel__code>[\w\-]+)", ProfileViewset, basename="profle",
+    r"(?P<hostel__code>[\w\-]+)/profile", ProfileViewset, basename="profle",
 )
 router.register(
-    r"contact/(?P<hostel__code>[\w\-]+)", ContactViewset, basename="contact",
+    r"(?P<hostel__code>[\w\-]+)/contact", ContactViewset, basename="contact",
 )
 router.register(
-    r"event/(?P<hostel__code>[\w\-]+)", EventViewset, basename="event",
+    r"(?P<hostel__code>[\w\-]+)/event", EventViewset, basename="event",
 )
 
 urlpatterns = [
