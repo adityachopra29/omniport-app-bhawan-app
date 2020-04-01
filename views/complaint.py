@@ -1,6 +1,7 @@
-from rest_framework import mixins, viewsets
+from rest_framework import mixins, viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 from django.core.exceptions import ObjectDoesNotExist
 
 
@@ -28,28 +29,18 @@ class ComplaintViewset(
         queryset = Complaint.objects.filter(hostel__code=self.kwargs["hostel__code"],)
         return queryset
 
-    def retrieve(self, request, hostel__code, pk):
-        queryset = self.get_queryset()
-        try:
-            complaint = queryset.get(pk=pk)
-            self.check_object_permissions(request, complaint.person)
-        except ObjectDoesNotExist:
-            complaint = None
-        serializer = ComplaintSerializer(complaint)
-        return Response(serializer.data)
-
     def get_serializer_context(self):
         return {
             "person": self.request.person,
             "hostel__code": self.kwargs["hostel__code"],
         }
 
-    @action(
-        detail=True,
-        methods=["POST", "GET"],
-        permission_classes=[IsSupervisor],
-        url_path="forward",
-    )
-    def forward(self, request, hostel__code, pk=None):
-        obj = self.get_object()
-        # obj.forwarded =
+    def retrieve(self, request, hostel__code, pk=None):
+        queryset = self.get_queryset()
+        try:
+            complaint = queryset.get(pk=pk)
+            self.check_object_permissions(request, complaint.person)
+        except ObjectDoesNotExist:
+            complaint = Complaint.objects.none()
+        serializer = ComplaintSerializer(complaint)
+        return Response(serializer.data)

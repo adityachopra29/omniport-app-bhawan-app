@@ -17,25 +17,35 @@ class RoomBookingViewset(viewsets.ModelViewSet):
     """
 
     serializer_class = RoomBookingSerializer
-    permission_classes = [
-        IsAuthenticated,
-        IsOwner|IsHostelAdmin,
-    ]
 
     def get_queryset(self):
         """
         Return the queryset of bookings grouped by a hostel
         :return: the queryset of bookings grouped by a hostel
         """
-
-        queryset = RoomBooking.objects.filter(hostel__code=self.kwargs["hostel__code"],)
+        
+        filters = {}
+        filters['hostel__code'] = self.kwargs['hostel__code']
+        if 'forwarded' in self.request.GET.keys():
+            filters['forwarded'] = self.request.GET['forwarded']
+        queryset = RoomBooking.objects.filter(**filters)
         return queryset
+
 
     def get_serializer_context(self):
         return {
             "hostel__code": self.kwargs["hostel__code"],
             "person": self.request.person,
         }
+    
+
+    def get_permissions(self):
+        if 'forwarded' in self.request.GET.keys() and self.action == 'partial_update':
+            permission_classes = [IsSupervisor, IsAuthenticated]
+        else:
+            permission_classes = [IsOwner|IsHostelAdmin, IsAuthenticated]
+        return [permission() for permission in permission_classes]
+
 
     def list(self, request, hostel__code):
         """
@@ -44,8 +54,16 @@ class RoomBookingViewset(viewsets.ModelViewSet):
 
         queryset = self.get_queryset()
         if get_hostel_admin(request.user.person) is None:
-            bookings = queryset.filter(person=request.user.person)
+            bookings = queryset.filter(person=request.person)
         else:
             bookings = queryset
         serializer = RoomBookingSerializer(bookings, many=True)
+        return Response(serializer.data)
+
+
+    def partial_update(self, request, hostel__code, pk=None):
+        instance = RoomBooking.objects.get(pk=pk)
+        serializer = RoomBookingSerializer(instance, data=self.request.POST, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
         return Response(serializer.data)

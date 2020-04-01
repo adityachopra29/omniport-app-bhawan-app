@@ -5,7 +5,7 @@ from rest_framework import serializers
 from kernel.managers.get_role import get_role
 from formula_one.mixins.period_mixin import ActiveStatus
 
-from bhawan_app.managers.get_hostel_admin import get_hostel_admin
+from bhawan_app.managers.services import get_hostel_admin
 
 ResidentialInformation = swapper.load_model('kernel', 'ResidentialInformation')
 

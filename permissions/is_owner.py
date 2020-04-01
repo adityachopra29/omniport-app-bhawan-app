@@ -16,5 +16,5 @@ class IsOwner(permissions.BasePermission):
         checked
         :return: if the the person is allowed or not
         """
-
-        return obj.person == request.user.person
+    
+        return obj == request.person
