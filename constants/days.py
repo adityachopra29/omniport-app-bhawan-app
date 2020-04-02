@@ -9,7 +9,10 @@ THURSDAY = "thu"
 FRIDAY = "fri"
 SATURDAY = "sat"
 SUNDAY = "sun"
-DAILY = "dai"
+WEEKDAY = f"{MONDAY},{TUESDAY},{WEDNESDAY},{THURSDAY},{FRIDAY}"
+WEEKEND = f"{SATURDAY},{SUNDAY}"
+DAILY = f"{WEEKDAY},{WEEKEND}"
+
 DAYS = (
     (MONDAY, "Monday"),
     (TUESDAY, "Tuesday"),
@@ -19,4 +22,6 @@ DAYS = (
     (SATURDAY, "Saturday"),
     (SUNDAY, "Sunday"),
     (DAILY, "Daily"),
+    (WEEKDAY, "Weekday"),
+    (WEEKEND, "Weekend"),
 )

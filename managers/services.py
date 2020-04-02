@@ -1,4 +1,5 @@
 from formula_one.enums.active_status import ActiveStatus
+
 from bhawan_app.models.roles import HostelAdmin
 from bhawan_app.constants import designations
 

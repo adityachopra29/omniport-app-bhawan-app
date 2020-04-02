@@ -39,4 +39,5 @@ class Complaint(Model):
         :return: the string representation of the model
         """
 
-        return f"{self.complaint_type} issue in {self.room_no}"
+        complaint_type = self.get_complaint_type_display()
+        return f"{complaint_type} issue in {self.room_no}"
