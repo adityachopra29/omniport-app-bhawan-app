@@ -1,13 +1,10 @@
-from rest_framework import mixins, viewsets
+from rest_framework import mixins, viewsets, status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from django.shortcuts import get_object_or_404
 
 from bhawan_app.models import RoomBooking
-from bhawan_app.permissions.is_owner import IsOwner
-from bhawan_app.permissions.is_hostel_admin import IsHostelAdmin
 from bhawan_app.serializers.room_booking import RoomBookingSerializer
-from bhawan_app.managers.services import get_hostel_admin
+from bhawan_app.managers.services import get_hostel_admin, is_supervisor, is_warden
 
 
 class RoomBookingViewset(viewsets.ModelViewSet):
@@ -17,6 +14,8 @@ class RoomBookingViewset(viewsets.ModelViewSet):
     """
 
     serializer_class = RoomBookingSerializer
+    allowed_methods = ['GET', 'PATCH', 'POST']
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         """
@@ -39,21 +38,13 @@ class RoomBookingViewset(viewsets.ModelViewSet):
         }
     
 
-    def get_permissions(self):
-        if 'forwarded' in self.request.GET.keys() and self.action == 'partial_update':
-            permission_classes = [IsSupervisor, IsAuthenticated]
-        else:
-            permission_classes = [IsOwner|IsHostelAdmin, IsAuthenticated]
-        return [permission() for permission in permission_classes]
-
-
     def list(self, request, hostel__code):
         """
         List all the bookings according to permissions
         """
 
         queryset = self.get_queryset()
-        if get_hostel_admin(request.user.person) is None:
+        if get_hostel_admin(request.person) is None:
             bookings = queryset.filter(person=request.person)
         else:
             bookings = queryset
@@ -62,8 +53,15 @@ class RoomBookingViewset(viewsets.ModelViewSet):
 
 
     def partial_update(self, request, hostel__code, pk=None):
+        data = request.data
+        if 'forwarded' in data.keys() and not is_supervisor(request.person):
+                return Response("Only Supervisor is allowed to perform this action!", status=status.HTTP_403_FORBIDDEN)
+
+        if 'status' in data.keys() and not is_warden(request.person):
+                return Response("Only Warden is allowed to perform this action!", status=status.HTTP_403_FORBIDDEN)
+        
         instance = RoomBooking.objects.get(pk=pk)
-        serializer = RoomBookingSerializer(instance, data=self.request.POST, partial=True)
+        serializer = RoomBookingSerializer(instance, data=data, partial=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)

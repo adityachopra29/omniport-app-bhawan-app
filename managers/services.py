@@ -29,7 +29,21 @@ def is_supervisor(person):
 
     role = get_hostel_admin(person)
     if role is not None:
-        return role.designation is designations.SUPERVISOR
+        return role.designation == designations.SUPERVISOR
+    return False
+
+def is_warden(person):
+    """
+    Determines if the person has hostel Warden privileges
+    :param person: an instance of the Person model whose roles are sought
+    :return: true if person is supervisor else false
+    """
+
+    role = get_hostel_admin(person)
+    if role is not None:
+        return role.designation == designations.WARDEN\
+        or role.designation == designations.CHIEF_WARDEN\
+        or role.designation == designations.ASSISTANT_WARDEN
     return False
 
 def is_hostel_admin(person):
