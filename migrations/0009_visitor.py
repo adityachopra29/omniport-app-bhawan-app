@@ -3,6 +3,7 @@
 from django.conf import settings
 from django.db import migrations, models
 import django.db.models.deletion
+import formula_one.utils.upload_to
 
 
 class Migration(migrations.Migration):
@@ -22,6 +23,7 @@ class Migration(migrations.Migration):
                 ('relation', models.CharField(max_length=50)),
                 ('booking', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='visitor', to='bhawan_app.RoomBooking')),
                 ('person', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.KERNEL_PERSON_MODEL)),
+                ('photo_identification', models.FileField(upload_to=formula_one.utils.upload_to.UploadTo('bhawan_app', 'visitor_id'))),
             ],
             options={"abstract": False,},
         ),

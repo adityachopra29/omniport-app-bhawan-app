@@ -1,14 +1,15 @@
 import swapper
-
 from django.db import models
+
 from formula_one.models.base import Model
+from formula_one.utils.upload_to import UploadTo
 
 from bhawan_app.models import RoomBooking
 
 
 class Visitor(Model):
     """
-    This model contains profile information of a hostel in an institute
+    This model contains information about the visitor of a hostel room
     """
 
     person = models.ForeignKey(
@@ -22,6 +23,9 @@ class Visitor(Model):
     )
     relation = models.CharField(
         max_length=50,
+    )
+    photo_identification = models.FileField(
+        upload_to=UploadTo('bhawan_app', 'visitor_id')
     )
 
     def __str__(self):

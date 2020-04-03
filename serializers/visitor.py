@@ -22,4 +22,5 @@ class VisitorSerializer(serializers.ModelSerializer):
             'id',
             'full_name',
             'relation',
+            'photo_identification',
         ]
