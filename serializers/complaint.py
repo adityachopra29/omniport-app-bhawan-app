@@ -11,21 +11,26 @@ class ComplaintSerializer(serializers.ModelSerializer):
     Serializer for Complaint objects
     """
 
-    hostel = serializers.CharField(source="hostel.name", read_only=True,)
-
-    hostel_code = serializers.CharField(source="hostel.code", read_only=True,)
+    complainant = serializers.CharField(
+        source='person.full_name',
+    )
+    hostel_code = serializers.CharField(
+        source='person.residentialinformation.residence.code',
+        read_only=True,
+    )
+    room_no = serializers.CharField(
+        source='person.residentialinformation.room_number',
+        read_only=True,
+    )
 
     phone_number = serializers.SerializerMethodField()
 
     class Meta:
         model = Complaint
         fields = [
-            "hostel",
-            "person",
+            "complainant",
             "status",
             "complaint_type",
-            "available_from",
-            "available_till",
             "room_no",
             "hostel_code",
             "description",

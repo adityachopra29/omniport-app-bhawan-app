@@ -26,7 +26,10 @@ class ComplaintViewset(
     serializer_class = ComplaintSerializer
 
     def get_queryset(self):
-        queryset = Complaint.objects.filter(hostel__code=self.kwargs["hostel__code"],)
+        queryset = Complaint.objects.filter(
+            person__residentialinformation__residence__code= \
+                self.kwargs["hostel__code"],
+        )
         return queryset
 
     def get_serializer_context(self):

@@ -11,9 +11,6 @@ class Contact(Model):
     This model holds contact information of the staff concerned with a hostel
     """
 
-    hostel = models.ForeignKey(
-        to=swapper.get_model_name("kernel", "Residence"), on_delete=models.CASCADE,
-    )
     person = models.ForeignKey(
         to=swapper.get_model_name("kernel", "Person"), on_delete=models.CASCADE,
     )

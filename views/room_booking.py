@@ -24,7 +24,8 @@ class RoomBookingViewset(viewsets.ModelViewSet):
         """
         
         filters = {}
-        filters['hostel__code'] = self.kwargs['hostel__code']
+        filters['person__residentialinformation__residence__code'] = \
+            self.kwargs['hostel__code']
         if 'forwarded' in self.request.GET.keys():
             filters['forwarded'] = self.request.GET['forwarded']
         queryset = RoomBooking.objects.filter(**filters)
@@ -33,7 +34,6 @@ class RoomBookingViewset(viewsets.ModelViewSet):
 
     def get_serializer_context(self):
         return {
-            "hostel__code": self.kwargs["hostel__code"],
             "person": self.request.person,
         }
     
@@ -55,10 +55,16 @@ class RoomBookingViewset(viewsets.ModelViewSet):
     def partial_update(self, request, hostel__code, pk=None):
         data = request.data
         if 'forwarded' in data.keys() and not is_supervisor(request.person):
-                return Response("Only Supervisor is allowed to perform this action!", status=status.HTTP_403_FORBIDDEN)
+                return Response(
+                    "Only Supervisor is allowed to perform this action!",
+                    status=status.HTTP_403_FORBIDDEN,
+                )
 
         if 'status' in data.keys() and not is_warden(request.person):
-                return Response("Only Warden is allowed to perform this action!", status=status.HTTP_403_FORBIDDEN)
+                return Response(
+                    "Only Warden is allowed to perform this action!",
+                    status=status.HTTP_403_FORBIDDEN,
+                )
         
         instance = RoomBooking.objects.get(pk=pk)
         serializer = RoomBookingSerializer(instance, data=data, partial=True)

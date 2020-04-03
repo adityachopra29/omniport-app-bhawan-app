@@ -6,8 +6,6 @@ from formula_one.models.generics.contact_information import ContactInformation
 from bhawan_app.models import RoomBooking
 from bhawan_app.serializers.visitor import VisitorSerializer
 
-Hostel = swapper.load_model('kernel', 'Residence')
-
 
 class RoomBookingSerializer(serializers.ModelSerializer):
     """
@@ -16,6 +14,10 @@ class RoomBookingSerializer(serializers.ModelSerializer):
 
     booked_by = serializers.CharField(
         source='person.full_name',
+        read_only=True,
+    )
+    booked_by_room_no = serializers.CharField(
+        source='person.residentialinformation.room_number',
         read_only=True,
     )
     visitor = VisitorSerializer(
@@ -52,8 +54,6 @@ class RoomBookingSerializer(serializers.ModelSerializer):
         """
         Get hostel, hostel__code from request url using context from views
         """
-        hostel_code = self.context["hostel__code"]
-        hostel = Hostel.objects.get(code=hostel_code)
         visitors_serializer.is_valid(raise_exception=True)
 
         """
@@ -61,7 +61,7 @@ class RoomBookingSerializer(serializers.ModelSerializer):
         """
         person = self.context["person"]
         room_booking = RoomBooking.objects.create(
-            **validated_data, hostel=hostel, person=person,
+            **validated_data, person=person,
         )
 
         """
