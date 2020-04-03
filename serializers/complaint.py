@@ -1,6 +1,7 @@
 import swapper
-
 from rest_framework import serializers
+
+from formula_one.models.generics.contact_information import ContactInformation
 
 from bhawan_app.models import Complaint
 
@@ -13,6 +14,8 @@ class ComplaintSerializer(serializers.ModelSerializer):
     hostel = serializers.CharField(source="hostel.name", read_only=True,)
 
     hostel_code = serializers.CharField(source="hostel.code", read_only=True,)
+
+    phone_number = serializers.SerializerMethodField()
 
     class Meta:
         model = Complaint
@@ -27,6 +30,7 @@ class ComplaintSerializer(serializers.ModelSerializer):
             "hostel_code",
             "description",
             "id",
+            "phone_number",
         ]
         extra_kwargs = {
             "person": {"read_only": True},
@@ -42,3 +46,16 @@ class ComplaintSerializer(serializers.ModelSerializer):
         validated_data["person"] = self.context["person"]
         validated_data["hostel"] = hostel
         return super().create(validated_data)
+
+    def get_phone_number(self, obj):
+        """
+        Returns the primary phone number of the complainant
+        :return: the primary phone number of the complainant
+        """
+
+        try:
+            contact_information = \
+                ContactInformation.objects.get(person=obj.person)
+            return contact_information.primary_phone_number
+        except ContactInformation.DoesNotExist:
+            return None

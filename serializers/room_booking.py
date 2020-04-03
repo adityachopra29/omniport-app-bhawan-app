@@ -1,6 +1,7 @@
 import swapper
-
 from rest_framework import serializers
+
+from formula_one.models.generics.contact_information import ContactInformation
 
 from bhawan_app.models import RoomBooking
 from bhawan_app.serializers.visitor import VisitorSerializer
@@ -20,6 +21,7 @@ class RoomBookingSerializer(serializers.ModelSerializer):
     visitor = VisitorSerializer(
         many=True,
     )
+    phone_number = serializers.SerializerMethodField()
 
     class Meta:
         model = RoomBooking
@@ -31,7 +33,8 @@ class RoomBookingSerializer(serializers.ModelSerializer):
             'requested_till',
             'visitor',
             'booked_by_room_no',
-            'forwarded'
+            'forwarded',
+            'phone_number',
         ]
         extra_kwargs = {
             'forwarded': {
@@ -70,3 +73,16 @@ class RoomBookingSerializer(serializers.ModelSerializer):
         visitors_serializer.save()
 
         return room_booking
+
+    def get_phone_number(self, obj):
+        """
+        Returns the primary phone number of the person who booked room
+        :return: the primary phone number of the person who booked room
+        """
+
+        try:
+            contact_information = \
+                ContactInformation.objects.get(person=obj.person)
+            return contact_information.primary_phone_number
+        except ContactInformation.DoesNotExist:
+            return None
