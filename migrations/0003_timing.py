@@ -43,7 +43,7 @@ class Migration(migrations.Migration):
                 ),
                 ("start", models.TimeField()),
                 ("end", models.TimeField(blank=True, null=True)),
-                ("description", models.CharField(max_length=50)),
+                ("description", models.CharField(max_length=63, blank=True, null=True)),
             ],
             options={"abstract": False,},
         ),

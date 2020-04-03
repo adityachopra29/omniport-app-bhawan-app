@@ -13,7 +13,7 @@ class Timing(Model):
     day = MultiSelectField(choices=DAYS, max_length=50)
     start = models.TimeField()
     end = models.TimeField(null=True, blank=True,)
-    description = models.CharField(max_length=50,)
+    description = models.CharField(max_length=63, blank=True, null=True)
 
     @property
     def get_day(self):
