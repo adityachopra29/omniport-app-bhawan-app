@@ -29,7 +29,7 @@ class ComplaintTimeSlot(Model):
         queryset = self.timing.all()
         combined_timings = ''
         for timing in queryset:
-            day = timing.get_day
+            day = timing.day
             start = timing.start
             end = timing.end
             combined_timings += f'{day}: {start} - {end} | '

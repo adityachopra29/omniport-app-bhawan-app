@@ -15,4 +15,4 @@ class ComplaintTimeSlotViewset(viewsets.ModelViewSet):
 
     queryset = ComplaintTimeSlot.objects.all()
     serializer_class = ComplaintTimeSlotSerializer
-    permission_classes = [IsAuthenticated|IsHostelAdmin]
+    permission_classes = [IsAuthenticated & IsHostelAdmin]

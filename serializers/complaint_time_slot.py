@@ -23,7 +23,3 @@ class ComplaintTimeSlotSerializer(serializers.ModelSerializer):
             'complaint_type',
             'timing',
         ]
-
-    def create(self, validated_data):
-        # TODO: Set the end time to `self.end` if end is none
-        pass
