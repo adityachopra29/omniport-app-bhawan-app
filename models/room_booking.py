@@ -14,11 +14,12 @@ class RoomBooking(Model):
         to=swapper.get_model_name("Kernel", "Person"), on_delete=models.CASCADE
     )
     status = models.CharField(
-        max_length=10, choices=statuses.STATUSES, default=statuses.PENDING,
+        max_length=10, 
+        choices=statuses.BOOKING_STATUSES, 
+        default=statuses.PENDING,
     )
     requested_from = models.DateField()
     requested_till = models.DateField()
-    forwarded = models.BooleanField(default=False)
 
     def __str__(self):
         """

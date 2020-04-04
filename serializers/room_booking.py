@@ -35,14 +35,8 @@ class RoomBookingSerializer(serializers.ModelSerializer):
             'requested_till',
             'visitor',
             'booked_by_room_no',
-            'forwarded',
             'phone_number',
         ]
-        extra_kwargs = {
-            'forwarded': {
-                'write_only': True,
-            },
-        }
 
     def create(self, validated_data):
         """

@@ -4,5 +4,4 @@ __pycache__/
 # Vim swap files
 *.sw*
 
-# Vscode files
- .vscode
+.vscode/settings.json
