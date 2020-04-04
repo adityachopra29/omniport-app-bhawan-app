@@ -8,6 +8,7 @@ from bhawan_app.views.complaint import ComplaintViewset
 from bhawan_app.views.room_booking import RoomBookingViewset
 from bhawan_app.views.personal_info import PersonalInfoView
 from bhawan_app.views.event import EventViewset
+from bhawan_app.views.complaint_time_slot import ComplaintTimeSlotViewset
 
 
 app_name = "bhawan_app"
@@ -33,6 +34,11 @@ router.register(
 )
 router.register(
     r"(?P<hostel__code>[\w\-]+)/event", EventViewset, basename="event",
+)
+router.register(
+    r"(?P<hostel__code>[\w\-]+)/time_slot",
+    ComplaintTimeSlotViewset,
+    basename="time_slot",
 )
 
 urlpatterns = [

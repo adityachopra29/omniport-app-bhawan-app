@@ -4,8 +4,7 @@ from bhawan_app.managers.services import is_hostel_admin
 
 class IsOwner(permissions.BasePermission):
     """
-    Object-level permission to only allow owners and admin of an object to edit
-    it.
+    Object-level permission to only allow owners of an object to edit it.
     """
 
     def has_object_permission(self, request, view, obj):

@@ -4,8 +4,7 @@ from bhawan_app.constants import designations
 
 class IsSupervisor(permissions.BasePermission):
     """
-    Object-level permission to only allow admin of an object to edit
-    it.
+    Permission to only allow supervisors to interact with the object.
     """
 
     def has_permission(self, request, view):
