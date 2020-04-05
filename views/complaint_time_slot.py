@@ -16,3 +16,9 @@ class ComplaintTimeSlotViewset(viewsets.ModelViewSet):
     queryset = ComplaintTimeSlot.objects.all()
     serializer_class = ComplaintTimeSlotSerializer
     permission_classes = [IsAuthenticated & IsHostelAdmin]
+    allowed_methods = ['GET', 'POST', 'PATCH']
+
+    def get_serializer_context(self):
+        return {
+            'hostel__code': self.kwargs['hostel__code']
+        }

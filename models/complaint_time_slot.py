@@ -18,6 +18,10 @@ class ComplaintTimeSlot(Model):
         default=complaint_types.OTHER,
     )
     timing = models.ManyToManyField(Timing)
+    hostel = models.ForeignKey(
+        to=swapper.get_model_name("Kernel", "Residence"),
+        on_delete=models.CASCADE,
+    )
 
     def __str__(self):
         """
