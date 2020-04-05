@@ -24,6 +24,7 @@ class ComplaintTimeSlotSerializer(serializers.ModelSerializer):
         fields = [
             'complaint_type',
             'timing',
+            'id',
         ]
 
     def create(self, validated_data):
@@ -48,7 +49,7 @@ class ComplaintTimeSlotSerializer(serializers.ModelSerializer):
         """
         timing_objects = timings_serializer.save()
         time_slot.timing.add(*timing_objects)
-        
+
         return time_slot
 
     def update(self, instance, validated_data):
