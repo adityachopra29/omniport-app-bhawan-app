@@ -2,8 +2,8 @@ import swapper
 from rest_framework import serializers
 
 from formula_one.models.generics.contact_information import ContactInformation
-
-from bhawan_app.models import Complaint
+from bhawan_app.models import Complaint, ComplaintTimeSlot
+from bhawan_app.serializers.timing import TimingSerializer
 
 
 class ComplaintSerializer(serializers.ModelSerializer):
@@ -25,6 +25,8 @@ class ComplaintSerializer(serializers.ModelSerializer):
 
     phone_number = serializers.SerializerMethodField()
 
+    timing = serializers.SerializerMethodField()
+
     class Meta:
         model = Complaint
         fields = [
@@ -36,6 +38,7 @@ class ComplaintSerializer(serializers.ModelSerializer):
             "description",
             "id",
             "phone_number",
+            "timing",
         ]
         extra_kwargs = {
             "person": {"read_only": True},
@@ -52,9 +55,25 @@ class ComplaintSerializer(serializers.ModelSerializer):
         validated_data["hostel"] = hostel
         return super().create(validated_data)
 
+    def get_timing(self, obj):
+        """
+        Returns the timings of a complaint type.
+        :return: Timing of a complaint
+        """
+
+        try:
+            hostel = obj.person.residentialinformation.residence
+            timings = ComplaintTimeSlot.objects\
+                .filter(hostel=hostel).get(complaint_type=obj.complaint_type)
+            new_timings = timings.timing.all()
+            return TimingSerializer(new_timings, many=True).data
+        except ComplaintTimeSlot.DoesNotExist:
+            return None
+
     def get_phone_number(self, obj):
         """
-        Returns the primary phone number of the complainant
+        Returns the timings of a complaint.
+         Returns the primary phone number of the complainant
         :return: the primary phone number of the complainant
         """
 

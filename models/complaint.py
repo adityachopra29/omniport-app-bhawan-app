@@ -2,8 +2,8 @@ import swapper
 from django.db import models
 
 from formula_one.models.base import Model
-
 from bhawan_app.constants import complaint_types, statuses
+from bhawan_app.models.complaint_time_slot import ComplaintTimeSlot
 
 
 class Complaint(Model):
@@ -14,7 +14,6 @@ class Complaint(Model):
     person = models.ForeignKey(
         to=swapper.get_model_name("Kernel", "Person"), on_delete=models.CASCADE,
     )
-
     complaint_type = models.CharField(
         max_length=10,
         choices=complaint_types.COMPLAINT_TYPES,
@@ -25,7 +24,6 @@ class Complaint(Model):
         max_length=10, choices=statuses.STATUSES, default=statuses.PENDING
     )
     description = models.TextField()
-    forwarded = models.BooleanField(default=False)
 
     def __str__(self):
         """

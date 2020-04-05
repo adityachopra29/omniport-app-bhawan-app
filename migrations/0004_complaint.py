@@ -58,7 +58,6 @@ class Migration(migrations.Migration):
                 ("available_from", models.TimeField()),
                 ("available_till", models.TimeField()),
                 ("room_no", models.PositiveIntegerField()),
-                ("forwarded", models.BooleanField(default=False)),
                 (
                     "person",
                     models.ForeignKey(
