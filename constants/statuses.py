@@ -6,9 +6,13 @@ APPROVED = "apr"
 PENDING = "pen"
 REJECTED = "rej"
 FORWARDED = "fwd"
-STATUSES = [
+CONFIRMED = "cnf"
+COMLAINT_STATUSES = [
     (APPROVED, "Approved"),
     (PENDING, "Pending"),
     (REJECTED, "Rejected"),
 ]
-BOOKING_STATUSES = STATUSES + [(FORWARDED, 'Forwarded')]
+BOOKING_STATUSES = COMLAINT_STATUSES + [
+    (FORWARDED, 'Forwarded'),
+    (CONFIRMED, 'Confirmed'),
+]

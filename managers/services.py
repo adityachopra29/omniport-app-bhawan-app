@@ -35,7 +35,7 @@ def is_warden(person):
     """
     Determines if the person has hostel Warden privileges
     :param person: an instance of the Person model whose roles are sought
-    :return: true if person is supervisor else false
+    :return: true if person is Warden else false
     """
 
     role = get_hostel_admin(person)

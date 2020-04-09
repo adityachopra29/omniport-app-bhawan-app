@@ -4,6 +4,7 @@ from rest_framework import serializers
 from formula_one.models.generics.contact_information import ContactInformation
 from bhawan_app.models import Complaint, ComplaintTimeSlot
 from bhawan_app.serializers.timing import TimingSerializer
+from bhawan_app.constants import statuses
 
 
 class ComplaintSerializer(serializers.ModelSerializer):
@@ -11,8 +12,15 @@ class ComplaintSerializer(serializers.ModelSerializer):
     Serializer for Complaint objects
     """
 
+    def __init__(self, *args, **kwargs):
+        """If object is being updated don't allow contact to be changed."""
+        super().__init__(*args, **kwargs)
+        if self.instance is not None:
+            self.fields.get('status').read_only = False
+
     complainant = serializers.CharField(
         source='person.full_name',
+        read_only=True,
     )
     hostel_code = serializers.CharField(
         source='person.residentialinformation.residence.code',
@@ -41,18 +49,12 @@ class ComplaintSerializer(serializers.ModelSerializer):
             "timing",
         ]
         extra_kwargs = {
-            "person": {"read_only": True},
+            "status": {"read_only": True},
         }
 
     def create(self, validated_data):
-        Hostel = swapper.load_model('kernel', 'Residence')
-        hostel_code = self.context['hostel__code']
-        try:
-            hostel = Hostel.objects.get(code=hostel_code)
-        except Exception:
-            raise serializers.ValidationError("Wrong hostel code")
         validated_data["person"] = self.context["person"]
-        validated_data["hostel"] = hostel
+        validated_data["status"] = statuses.PENDING
         return super().create(validated_data)
 
     def get_timing(self, obj):

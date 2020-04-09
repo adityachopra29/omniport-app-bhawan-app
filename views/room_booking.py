@@ -60,7 +60,7 @@ class RoomBookingViewset(viewsets.ModelViewSet):
                     "Only Supervisor is allowed to perform this action!",
                     status=status.HTTP_403_FORBIDDEN,
                 )
-            elif not is_supervisor(request.person):
+            elif not is_warden(request.person):
                 return Response(
                     "Only Warden is allowed to perform this action!",
                     status=status.HTTP_403_FORBIDDEN,
