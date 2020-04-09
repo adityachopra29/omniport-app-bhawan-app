@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from rest_framework import mixins, viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -24,7 +26,7 @@ class ComplaintViewset(viewsets.ModelViewSet):
         queryset = Complaint.objects.filter(
             person__residentialinformation__residence__code= \
                 self.kwargs["hostel__code"],
-        )
+        ).order_by('-datetime_modified')
         return queryset
 
     def get_serializer_context(self):
@@ -52,5 +54,5 @@ class ComplaintViewset(viewsets.ModelViewSet):
 
         serializer = ComplaintSerializer(instance, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
-        serializer.save()
+        serializer.save(datetime_modified=datetime.now())
         return Response(serializer.data)

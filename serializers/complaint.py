@@ -1,4 +1,6 @@
 import swapper
+from datetime import datetime
+
 from rest_framework import serializers
 
 from formula_one.models.generics.contact_information import ContactInformation
@@ -55,6 +57,7 @@ class ComplaintSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         validated_data["person"] = self.context["person"]
         validated_data["status"] = statuses.PENDING
+        validated_data["datetime_modified"] = datetime.now()
         return super().create(validated_data)
 
     def get_timing(self, obj):

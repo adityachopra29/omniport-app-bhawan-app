@@ -1,8 +1,9 @@
 import swapper
+from datetime import datetime
+
 from rest_framework import serializers
 
 from formula_one.models.generics.contact_information import ContactInformation
-
 from bhawan_app.models import RoomBooking
 from bhawan_app.serializers.visitor import VisitorSerializer
 
@@ -36,6 +37,7 @@ class RoomBookingSerializer(serializers.ModelSerializer):
             'visitor',
             'booked_by_room_no',
             'phone_number',
+            "datetime_modified"
         ]
 
     def create(self, validated_data):
@@ -64,7 +66,7 @@ class RoomBookingSerializer(serializers.ModelSerializer):
         for visitor in visitors_serializer.validated_data:
             visitor['booking'] = room_booking
 
-        visitors_serializer.save()
+        visitors_serializer.save(datetime_modified=datetime.now())
 
         return room_booking
 

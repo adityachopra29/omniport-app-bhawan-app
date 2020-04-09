@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.shortcuts import get_object_or_404
 
 from rest_framework import mixins, viewsets, status
@@ -6,7 +7,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from bhawan_app.models import RoomBooking
 from bhawan_app.serializers.room_booking import RoomBookingSerializer
-from bhawan_app.managers.services import get_hostel_admin, is_supervisor, is_warden
+from bhawan_app.managers.services import is_hostel_admin, is_supervisor, is_warden
 from bhawan_app.constants import statuses
 
 
@@ -29,7 +30,9 @@ class RoomBookingViewset(viewsets.ModelViewSet):
         filters = {}
         filters['person__residentialinformation__residence__code'] = \
             self.kwargs['hostel__code']
-        queryset = RoomBooking.objects.filter(**filters)
+        queryset = RoomBooking.objects\
+            .filter(**filters)\
+            .order_by('-datetime_modified')
         return queryset
 
     def get_serializer_context(self):
@@ -41,13 +44,10 @@ class RoomBookingViewset(viewsets.ModelViewSet):
         """
         List all the bookings according to permissions
         """
-
         queryset = self.get_queryset()
-        if get_hostel_admin(request.person) is None:
-            bookings = queryset.filter(person=request.person)
-        else:
-            bookings = queryset
-        serializer = RoomBookingSerializer(bookings, many=True)
+        if not is_hostel_admin(request.person):
+            queryset = queryset.filter(person=request.person)
+        serializer = RoomBookingSerializer(queryset, many=True)
         return Response(serializer.data)
 
     def partial_update(self, request, hostel__code, pk=None):
@@ -73,7 +73,7 @@ class RoomBookingViewset(viewsets.ModelViewSet):
 
         serializer = RoomBookingSerializer(instance, data=data, partial=True)
         serializer.is_valid(raise_exception=True)
-        serializer.save()
+        serializer.save(datetime_modified=datetime.now())
         return Response(serializer.data)
 
     def is_valid(self, new_status, prev_status):
