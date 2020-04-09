@@ -6,12 +6,19 @@ from rest_framework import serializers
 from formula_one.models.generics.contact_information import ContactInformation
 from bhawan_app.models import RoomBooking
 from bhawan_app.serializers.visitor import VisitorSerializer
+from bhawan_app.constants import statuses
 
 
 class RoomBookingSerializer(serializers.ModelSerializer):
     """
     Serializer for RoomBooking objects
     """
+    def __init__(self, *args, **kwargs):
+        """If object is being updated don't allow contact to be changed."""
+        super().__init__(*args, **kwargs)
+        if self.instance is not None:
+            self.fields.get('status').read_only = False
+
 
     booked_by = serializers.CharField(
         source='person.full_name',
@@ -37,8 +44,10 @@ class RoomBookingSerializer(serializers.ModelSerializer):
             'visitor',
             'booked_by_room_no',
             'phone_number',
-            "datetime_modified"
         ]
+        extra_kwargs = {
+            'status': { 'read_only': True },
+        }
 
     def create(self, validated_data):
         """
@@ -55,7 +64,8 @@ class RoomBookingSerializer(serializers.ModelSerializer):
         """
         Get authenticated user and make a RoomBooking instance
         """
-        person = self.context["person"]
+        person = self.context['person']
+        validated_data['status'] = statuses.PENDING
         room_booking = RoomBooking.objects.create(
             **validated_data, person=person,
         )
