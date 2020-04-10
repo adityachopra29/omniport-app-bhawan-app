@@ -80,7 +80,7 @@ class RoomBookingSerializer(serializers.ModelSerializer):
 
         return room_booking
 
-    def get_phone_number(self, obj):
+    def get_phone_number(self, booking):
         """
         Returns the primary phone number of the person who booked room
         :return: the primary phone number of the person who booked room
@@ -88,7 +88,7 @@ class RoomBookingSerializer(serializers.ModelSerializer):
 
         try:
             contact_information = \
-                ContactInformation.objects.get(person=obj.person)
+                ContactInformation.objects.get(person=booking.person)
             return contact_information.primary_phone_number
         except ContactInformation.DoesNotExist:
             return None

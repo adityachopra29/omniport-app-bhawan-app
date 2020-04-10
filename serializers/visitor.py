@@ -1,7 +1,10 @@
+import swapper
+
 from rest_framework import serializers
 
 from bhawan_app.models import Visitor
 
+Person = swapper.load_model('Kernel', 'Person')
 
 class VisitorSerializer(serializers.ModelSerializer):
     """
@@ -10,6 +13,10 @@ class VisitorSerializer(serializers.ModelSerializer):
 
     full_name = serializers.CharField(
         source='person.full_name',
+        read_only=True
+    )
+    full_name = serializers.CharField(
+        write_only=True,
     )
 
     class Meta:
@@ -23,11 +30,13 @@ class VisitorSerializer(serializers.ModelSerializer):
             'full_name',
             'relation',
             'photo_identification',
+            'full_name',
         ]
 
     def create(self, validated_data):
-        person, created = Visitor.objects.get_or_create(
-           full_name=validated_data['full_name']
+        person, created = Person.objects.get_or_create(
+           full_name=validated_data['ful_name'],
         )
+        validated_data.pop('full_name')
         validated_data['person'] = person
         return super().create(validated_data)
