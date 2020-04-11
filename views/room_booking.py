@@ -1,14 +1,19 @@
+import json
+import swapper
 from datetime import datetime
-from django.shortcuts import get_object_or_404
 
+from django.shortcuts import get_object_or_404
 from rest_framework import mixins, viewsets, status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
-from bhawan_app.models import RoomBooking
+from bhawan_app.models import RoomBooking, Visitor
 from bhawan_app.serializers.room_booking import RoomBookingSerializer
 from bhawan_app.managers.services import is_hostel_admin, is_supervisor, is_warden
 from bhawan_app.constants import statuses
+
+Person = swapper.load_model('kernel', 'Person')
+ResidentialInformation = swapper.load_model('kernel', 'ResidentialInformation')
 
 
 class RoomBookingViewset(viewsets.ModelViewSet):
@@ -49,6 +54,41 @@ class RoomBookingViewset(viewsets.ModelViewSet):
             queryset = queryset.filter(person=request.person)
         serializer = RoomBookingSerializer(queryset, many=True)
         return Response(serializer.data)
+
+    def create(self, request, hostel__code):
+        visitors = self.request.POST.pop('visitors')
+        try:
+            residential_information = request.person.residentialinformation
+        except ResidentialInformation.DoesNotExist:
+            return Response(
+                f'{request.person}\'s residential informarion is not registered',
+                status=status.HTTP_403_FORBIDDEN,
+            )
+        try:
+            for visitor in visitors:
+                sanitized_data = {}
+                for data in self.request.POST:
+                    sanitized_data[data] = self.request.POST[data]
+                room_booking = RoomBooking.objects.create(
+                    person=request.person,
+                    **sanitized_data,
+                )
+                visitor = json.loads(visitor)
+                visitor_full_name = visitor.pop('full_name')
+                visitor_person = Person.objects.create(
+                    full_name=visitor_full_name,
+                )
+                Visitor.objects.create(
+                    person=visitor_person,
+                    booking=room_booking, **visitor,
+                )
+            return Response(
+                'Room booking requested',
+                status=status.HTTP_201_CREATED,
+            )
+        except Exception as error:
+            return Response(error, status=status.HTTP_400_BAD_REQUEST)
+
 
     def partial_update(self, request, hostel__code, pk=None):
         data = request.data
