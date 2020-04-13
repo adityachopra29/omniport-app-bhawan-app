@@ -56,6 +56,7 @@ class RoomBookingViewset(viewsets.ModelViewSet):
         return Response(serializer.data)
 
     def create(self, request, hostel__code):
+        file_data = self.request.FILES
         visitors = self.request.POST.pop('visitors')
         try:
             residential_information = request.person.residentialinformation
@@ -65,6 +66,7 @@ class RoomBookingViewset(viewsets.ModelViewSet):
                 status=status.HTTP_403_FORBIDDEN,
             )
         try:
+            visitor_index = 0
             for visitor in visitors:
                 sanitized_data = {}
                 for data in self.request.POST:
@@ -78,10 +80,13 @@ class RoomBookingViewset(viewsets.ModelViewSet):
                 visitor_person = Person.objects.create(
                     full_name=visitor_full_name,
                 )
+                photo_identification = file_data.pop(f'visitors_{visitor_index}')
                 Visitor.objects.create(
                     person=visitor_person,
+                    photo_identification=photo_identification,
                     booking=room_booking, **visitor,
                 )
+                visitor_index+=1
             return Response(
                 'Room booking requested',
                 status=status.HTTP_201_CREATED,
