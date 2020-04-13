@@ -10,7 +10,11 @@ from django.shortcuts import get_object_or_404
 
 from bhawan_app.models import Complaint
 from bhawan_app.serializers.complaint import ComplaintSerializer
-from bhawan_app.managers.services import is_warden, is_supervisor
+from bhawan_app.managers.services import (
+    is_warden, 
+    is_supervisor, 
+    is_hostel_admin
+)
 from bhawan_app.constants import statuses   
 from bhawan_app.constants import complaint_types
 from bhawan_app.pagination.custom_pagination import CustomPagination 
@@ -66,6 +70,9 @@ class ComplaintViewset(viewsets.ModelViewSet):
         """
         filters = {}
         params = self.request.GET
+        print("*"*50)
+        print(params)
+        print("*"*50)
         
         """
         Apply the filters for statuses.
