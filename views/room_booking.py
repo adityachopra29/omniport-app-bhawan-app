@@ -32,12 +32,9 @@ class RoomBookingViewset(viewsets.ModelViewSet):
         :return: the queryset of bookings grouped by a hostel
         """
 
-        filters = {}
-        filters['person__residentialinformation__residence__code'] = \
-            self.kwargs['hostel__code']
+        filters = self.get_filters(self.request)
         queryset = RoomBooking.objects\
-            .filter(**filters)\
-            .order_by('-datetime_modified')
+            .filter(**filters).order_by('-datetime_modified')
         return queryset
 
     def get_serializer_context(self):
@@ -136,3 +133,27 @@ class RoomBookingViewset(viewsets.ModelViewSet):
         if new_status == statuses.APPROVED:
             return prev_status == statuses.FORWARDED
         return True
+
+    def get_filters(self, request):
+        """
+        Return a dict with all the filters populated with the
+        filters received from query params.
+        """
+        filters = {}
+        params = self.request.GET
+        
+        """
+        Apply the filters for statuses.
+        Usage: /complaint/?status=<status_in_uppercase>
+        """
+        if 'status' in params.keys():
+            status = params['status']
+            if status in statuses.BOOKING_STATUSES_DICT.keys():
+                filters['status'] = statuses.BOOKING_STATUSES_DICT[status]
+
+        """
+        Filter based on hostel
+        """
+        filters['person__residentialinformation__residence__code']= \
+                self.kwargs["hostel__code"]
+        return filters

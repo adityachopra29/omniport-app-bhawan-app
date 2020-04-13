@@ -10,7 +10,9 @@ from django.shortcuts import get_object_or_404
 
 from bhawan_app.models import Complaint
 from bhawan_app.serializers.complaint import ComplaintSerializer
-from bhawan_app.managers.services import is_warden, is_supervisor   
+from bhawan_app.managers.services import is_warden, is_supervisor
+from bhawan_app.constants import statuses   
+from bhawan_app.constants import complaint_types   
 
 
 class ComplaintViewset(viewsets.ModelViewSet):
@@ -23,10 +25,8 @@ class ComplaintViewset(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        queryset = Complaint.objects.filter(
-            person__residentialinformation__residence__code= \
-                self.kwargs["hostel__code"],
-        ).order_by('-datetime_modified')
+        filters = self.get_filters(self.request)
+        queryset = Complaint.objects.filter(**filters).order_by('-datetime_modified')
         return queryset
 
     def get_serializer_context(self):
@@ -56,3 +56,37 @@ class ComplaintViewset(viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
         serializer.save(datetime_modified=datetime.now())
         return Response(serializer.data)
+
+    def get_filters(self, request):
+        """
+        Return a dict with all the filters populated with the
+        filters received from query params.
+        """
+        filters = {}
+        params = self.request.GET
+        
+        """
+        Apply the filters for statuses.
+        Usage: /complaint/?status=<status_in_uppercase>
+        """
+        if 'status' in params.keys():
+            status = params['status']
+            if status in statuses.COMLAINT_STATUSES_DICT.keys():
+                filters['status'] = statuses.COMLAINT_STATUSES_DICT[status]
+
+        """
+        Apply the filters for types.
+        Usage: /complaint/?type=<type_in_uppercase>
+        """
+        if 'type' in params.keys():
+            complaint_type = params['type']
+            if complaint_type in complaint_types.COMPLAINT_TYPES_DICT.keys():
+                filters['complaint_type'] = \
+                    complaint_types.COMPLAINT_TYPES_DICT[complaint_type]
+        
+        """
+        Filter based on hostel
+        """
+        filters['person__residentialinformation__residence__code']= \
+                self.kwargs["hostel__code"]
+        return filters
