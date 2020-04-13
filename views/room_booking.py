@@ -11,6 +11,7 @@ from bhawan_app.models import RoomBooking, Visitor
 from bhawan_app.serializers.room_booking import RoomBookingSerializer
 from bhawan_app.managers.services import is_hostel_admin, is_supervisor, is_warden
 from bhawan_app.constants import statuses
+from bhawan_app.pagination.custom_pagination import CustomPagination
 
 Person = swapper.load_model('kernel', 'Person')
 ResidentialInformation = swapper.load_model('kernel', 'ResidentialInformation')
@@ -25,6 +26,8 @@ class RoomBookingViewset(viewsets.ModelViewSet):
     serializer_class = RoomBookingSerializer
     allowed_methods = ['GET', 'PATCH', 'POST']
     permission_classes = [IsAuthenticated]
+    pagination_class = CustomPagination
+    
 
     def get_queryset(self):
         """
@@ -41,16 +44,6 @@ class RoomBookingViewset(viewsets.ModelViewSet):
         return {
             "person": self.request.person,
         }
-
-    def list(self, request, hostel__code):
-        """
-        List all the bookings according to permissions
-        """
-        queryset = self.get_queryset()
-        if not is_hostel_admin(request.person):
-            queryset = queryset.filter(person=request.person)
-        serializer = RoomBookingSerializer(queryset, many=True)
-        return Response(serializer.data)
 
     def create(self, request, hostel__code):
         file_data = self.request.FILES
@@ -156,4 +149,10 @@ class RoomBookingViewset(viewsets.ModelViewSet):
         """
         filters['person__residentialinformation__residence__code']= \
                 self.kwargs["hostel__code"]
+
+        """
+        If not hostel admin, list the booking by the person only.
+        """
+        if not is_hostel_admin(request.person):
+            filters['person_id'] = request.person.id
         return filters

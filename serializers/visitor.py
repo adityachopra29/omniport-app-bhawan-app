@@ -35,7 +35,7 @@ class VisitorSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         person, created = Person.objects.get_or_create(
-           full_name=validated_data['ful_name'],
+           full_name=validated_data['full_name'],
         )
         validated_data.pop('full_name')
         validated_data['person'] = person
