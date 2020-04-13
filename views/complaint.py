@@ -70,18 +70,19 @@ class ComplaintViewset(viewsets.ModelViewSet):
         """
         filters = {}
         params = self.request.GET
-        print("*"*50)
-        print(params)
-        print("*"*50)
         
         """
         Apply the filters for statuses.
         Usage: /complaint/?status=<status_in_uppercase>
         """
         if 'status' in params.keys():
-            status = params['status']
-            if status in statuses.COMLAINT_STATUSES_DICT.keys():
-                filters['status'] = statuses.COMLAINT_STATUSES_DICT[status]
+            status_list = params.getlist('status')
+            mapping = statuses.COMLAINT_STATUSES_DICT
+            status_codes = [\
+                mapping[key] for key in status_list\
+                if key in mapping.keys()\
+            ]
+            filters['status__in'] = status_codes
 
         """
         Apply the filters for types.
@@ -100,7 +101,8 @@ class ComplaintViewset(viewsets.ModelViewSet):
                 self.kwargs["hostel__code"]
 
         """
-        If not hostel admin, list the booking by the person only.
+        If not hostel admin, list the booking by the person only. Person is the 
+        currently authenticated user.
         """
         if not is_hostel_admin(request.person):
             filters['person_id'] = request.person.id
