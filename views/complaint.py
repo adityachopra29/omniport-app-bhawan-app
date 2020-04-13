@@ -30,9 +30,35 @@ class ComplaintViewset(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     pagination_class = CustomPagination
 
+    @action(detail=True, methods=['GET'])
+    def unsuccessful(self, request, hostel__code, pk=None):
+        instance = self.get_object()
+        if instance.status == statuses.UNRESOLVED:
+            return Response(
+                {"error": "Action forbidden !"},
+                status.HTTP_403_FORBIDDEN,
+            )
+
+        if is_warden(request.person) or is_supervisor(request.person):
+            count = instance.failed_attempts
+            updates = {}
+            if count < 3:
+                instance.failed_attempts += 1
+            if count == 3:
+                instance.status = statuses.UNRESOLVED
+            instance.save()
+            serializer = self.get_serializer(instance)
+            return Response(serializer.data)
+
+        return Response(
+            {"error": "You are not allowed to perform this action !"},
+            status.HTTP_403_FORBIDDEN,
+        )
+
     def get_queryset(self):
         filters = self.get_filters(self.request)
-        queryset = Complaint.objects.filter(**filters).order_by('-datetime_modified')
+        queryset = Complaint.objects\
+            .filter(**filters).order_by('-datetime_modified')
         return queryset
 
     def get_serializer_context(self):
@@ -106,5 +132,4 @@ class ComplaintViewset(viewsets.ModelViewSet):
         """
         if not is_hostel_admin(request.person):
             filters['person_id'] = request.person.id
-
         return filters

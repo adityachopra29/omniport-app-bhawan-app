@@ -1,5 +1,6 @@
 import swapper
 from django.db import models
+from django.core.validators import MaxValueValidator
 
 from formula_one.models.base import Model
 from bhawan_app.constants import complaint_types, statuses
@@ -24,6 +25,10 @@ class Complaint(Model):
         max_length=10, choices=statuses.COMLAINT_STATUSES, default=statuses.PENDING
     )
     description = models.TextField()
+    failed_attempts = models.PositiveIntegerField(
+        default=0,
+        validators=[MaxValueValidator(3)],
+    )
 
     def __str__(self):
         """
