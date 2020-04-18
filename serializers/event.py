@@ -1,6 +1,7 @@
 import swapper
 
 from rest_framework import serializers
+
 from bhawan_app.models import Event
 from bhawan_app.serializers.timing import TimingSerializer
 
@@ -51,3 +52,15 @@ class EventSerializer(serializers.ModelSerializer):
             event.timings.add(timing)
 
         return event
+
+    def update(self, instance, validated_data):
+        if 'timings' in validated_data.keys():
+            timings = validated_data.pop('timings')
+            timing_serializer = TimingSerializer(data=timings, many=True)
+            timing_serializer.is_valid(raise_exception=True)
+            timings = timing_serializer.save()
+            instance.timings.clear()
+            instance.timings.add(*timings)
+        return super().update(instance, validated_data)
+
+        
