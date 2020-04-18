@@ -10,12 +10,16 @@ from bhawan_app.views.personal_info import PersonalInfoView
 from bhawan_app.views.event import EventViewset
 from bhawan_app.views.complaint_time_slot import ComplaintTimeSlotViewset
 from bhawan_app.views.hostel_admin import HostelAdminViewset
+from bhawan_app.views.constant import ConstantViewset
 
 
 app_name = "bhawan_app"
 
 router = DefaultRouter()
 
+router.register(
+    r"constants", ConstantViewset, basename="constant",
+)
 router.register(
     r"(?P<hostel__code>[\w\-]+)/complaint", ComplaintViewset, basename="complaint",
 )

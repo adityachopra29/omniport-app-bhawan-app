@@ -20,3 +20,13 @@ DAYS = (
     (SUNDAY, "Sunday"),
     (DAILY, "Daily"),
 )
+DAYS_MAP = {
+    'MONDAY': MONDAY,
+    'TUESDAY': TUESDAY,
+    'WEDNESDAY': WEDNESDAY,
+    'THURSDAY': THURSDAY,
+    'FRIDAY': FRIDAY,
+    'SATURDAY': SATURDAY,
+    'SUNDAY': SUNDAY,
+    'DAILY': DAILY,
+}

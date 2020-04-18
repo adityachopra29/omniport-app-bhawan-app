@@ -103,7 +103,7 @@ class ComplaintViewset(viewsets.ModelViewSet):
         """
         if 'status' in params.keys():
             status_list = params.getlist('status')
-            mapping = statuses.COMLAINT_STATUSES_DICT
+            mapping = statuses.COMLAINT_STATUSES_MAP
             status_codes = [\
                 mapping[key] for key in status_list\
                 if key in mapping.keys()\
@@ -116,9 +116,9 @@ class ComplaintViewset(viewsets.ModelViewSet):
         """
         if 'type' in params.keys():
             complaint_type = params['type']
-            if complaint_type in complaint_types.COMPLAINT_TYPES_DICT.keys():
+            if complaint_type in complaint_types.COMPLAINT_TYPES_MAP.keys():
                 filters['complaint_type'] = \
-                    complaint_types.COMPLAINT_TYPES_DICT[complaint_type]
+                    complaint_types.COMPLAINT_TYPES_MAP[complaint_type]
         
         """
         Filter based on hostel

@@ -37,7 +37,8 @@ class HostelAdminViewset(viewsets.ModelViewSet):
         if 'student' in params.keys():
             student = params['student']
             if student == 'true':
-                filters['designation__in'] = designations.STUDENT_POSTS.keys()
+                filters['designation__in'] = \
+                    designations.STUDENT_COUNCIL_MAP.keys()
 
         """
         Filter based on hostel
