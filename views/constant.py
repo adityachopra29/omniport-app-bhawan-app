@@ -24,15 +24,34 @@ class ConstantViewset(
         :return: dictionay of contants and codes
         """
         
+        mapping = designations.STUDENT_COUNCIL_MAP
+        reverse_student_council_map = \
+            {mapping[key]: key for key in mapping.keys()}
+        mapping = designations.ADMINISTRATIVE_COUNCIL_MAP
+        reverse_administrative_council_map = \
+            {mapping[key]: key for key in mapping.keys()}
+        mapping = complaint_types.COMPLAINT_TYPES_MAP
+        reverse_complaint_types_map = \
+            {mapping[key]: key for key in mapping.keys()}
+        mapping = statuses.COMLAINT_STATUSES_MAP
+        reverse_complaint_statuses_map = \
+            {mapping[key]: key for key in mapping.keys()}
+        mapping = statuses.BOOKING_STATUSES_MAP
+        reverse_booking_statuses_map = \
+            {mapping[key]: key for key in mapping.keys()}
+        mapping = days.DAYS_MAP
+        reverse_days = \
+            {mapping[key]: key for key in mapping.keys()}
+        
         response = {}
         response['designations'] = {
-            'STUDENT_COUNCIL': designations.STUDENT_COUNCIL_MAP,
-            'ADMINISTRATIVE_COUNCIL': designations.ADMINISTRATIVE_COUNCIL_MAP,
+            'STUDENT_COUNCIL': reverse_student_council_map,
+            'ADMINISTRATIVE_COUNCIL': reverse_administrative_council_map,
         }
-        response['complaint_types'] = complaint_types.COMPLAINT_TYPES_MAP
+        response['complaint_types'] = reverse_complaint_types_map
         response['statues'] = {
-            'COMLAINT_STATUSES': statuses.COMLAINT_STATUSES_MAP,
-            'BOOKING_STATUSES': statuses.BOOKING_STATUSES_MAP,
+            'COMLAINT_STATUSES': reverse_complaint_statuses_map,
+            'BOOKING_STATUSES': reverse_booking_statuses_map,
         }
         response['days'] = days.DAYS_MAP
         return Response(response)
