@@ -39,3 +39,6 @@ class ComplaintTimeSlot(Model):
             combined_timings += f'{day}: {start} - {end} | '
 
         return f'{complaint_type} | {combined_timings}'
+
+    class Meta:
+        unique_together = ('complaint_type', 'hostel',)
