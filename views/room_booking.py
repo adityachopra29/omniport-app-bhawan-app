@@ -141,8 +141,8 @@ class RoomBookingViewset(viewsets.ModelViewSet):
         """
         if 'status' in params.keys():
             status = params['status']
-            if status in statuses.BOOKING_STATUSES_DICT.keys():
-                filters['status'] = statuses.BOOKING_STATUSES_DICT[status]
+            if status in statuses.BOOKING_STATUSES_MAP.keys():
+                filters['status'] = statuses.BOOKING_STATUSES_MAP[status]
 
         """
         Filter based on hostel
