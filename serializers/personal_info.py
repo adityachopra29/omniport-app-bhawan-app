@@ -21,6 +21,9 @@ class PersonalInfoSerializer(serializers.ModelSerializer):
     is_admin = serializers.SerializerMethodField(
         read_only=True,
     )
+    is_student = serializers.SerializerMethodField(
+        read_only=True,
+    )
     full_name = serializers.CharField(
         source='person.full_name',
     )
@@ -38,12 +41,13 @@ class PersonalInfoSerializer(serializers.ModelSerializer):
             'full_name',
             'residence',
             'room_number',
+            'is_student',
         ]
 
     def get_id(self, obj):
         """
         Returns a unique identification ID for the logged in person
-        :param obj: an instance of ResidentialInformation
+        :param obj: an inst'isance of ResidentialInformation
         :return: a unique identification ID for the logged in person
         """
 
@@ -77,3 +81,18 @@ class PersonalInfoSerializer(serializers.ModelSerializer):
         if get_hostel_admin(obj.person) is None:
             return False
         return True
+    
+    def get_is_student(self, obj):
+        """
+        Checks if the authenticated user is a student or not
+        :param obj: an instance of ResidentialInformation
+        :return: a boolean if the authenticated user is a student or not
+        """
+
+        role_student = get_role(
+            person=obj.person,
+            role_name='Student',
+            active_status=ActiveStatus.IS_ACTIVE,
+            silent=True,
+        )
+        return role_student is not None
