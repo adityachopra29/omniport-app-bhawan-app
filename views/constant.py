@@ -45,13 +45,13 @@ class ConstantViewset(
         
         response = {}
         response['designations'] = {
-            'STUDENT_COUNCIL': reverse_student_council_map,
-            'ADMINISTRATIVE_COUNCIL': reverse_administrative_council_map,
+            **reverse_student_council_map,
+            **reverse_administrative_council_map,
         }
         response['complaint_types'] = reverse_complaint_types_map
         response['statues'] = {
             'COMLAINT_STATUSES': reverse_complaint_statuses_map,
             'BOOKING_STATUSES': reverse_booking_statuses_map,
         }
-        response['days'] = days.DAYS_MAP
+        response['days'] = reverse_days
         return Response(response)
