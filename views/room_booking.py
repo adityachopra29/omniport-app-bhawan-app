@@ -89,18 +89,18 @@ class RoomBookingViewset(viewsets.ModelViewSet):
         data = request.data
         instance = get_object_or_404(RoomBooking, pk=pk)
         if 'status' in data.keys():
-            if data['status'] == statuses.FORWARDED and \
-                    not is_supervisor(request.person):
-                return Response(
-                    "Only Supervisor is allowed to perform this action!",
-                    status=status.HTTP_403_FORBIDDEN,
-                )
+            if data['status'] == statuses.FORWARDED:
+                if not is_supervisor(request.person):
+                    return Response(
+                        "Only Supervisor is allowed to perform this action!",
+                        status=status.HTTP_403_FORBIDDEN,
+                    )
             elif not is_warden(request.person):
                 return Response(
                     "Only Warden is allowed to perform this action!",
                     status=status.HTTP_403_FORBIDDEN,
                 )
-            elif not self.is_valid(data['status'], instance.status):
+            if not self.is_valid(data['status'], instance.status):
                 return Response(
                     "Invalid action!",
                     status=status.HTTP_403_FORBIDDEN,
