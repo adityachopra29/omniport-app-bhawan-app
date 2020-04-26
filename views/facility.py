@@ -1,11 +1,17 @@
 import swapper
-from rest_framework import viewsets
+import json
+
+from rest_framework import viewsets, status
+from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
 from bhawan_app.models import Facility
+from bhawan_app.models import Timing
 from bhawan_app.serializers.facility import FacilitySerializer
 from bhawan_app.pagination.custom_pagination import CustomPagination
 from bhawan_app.managers.services import is_hostel_admin
+
+Residence = swapper.load_model('kernel', 'Residence')
 
 
 class FacilityViewset(viewsets.ModelViewSet):
@@ -37,10 +43,28 @@ class FacilityViewset(viewsets.ModelViewSet):
     def create(self, request, hostel__code):
         """
         Create facility instance if user has required permissions.
-        :return: new facility instance
+        :return: status code of the request
         """
+
         if is_hostel_admin(request.person):
-            return super().create(request, hostel__code)
+            hostel = Residence.objects.get(code=hostel__code)
+            timings = self.request.POST.pop('timings')
+            display_picture = self.request.FILES.get('display_picture')
+
+            data = {}
+            for field in self.request.POST:
+                data[field] = "".join(self.request.POST[field])
+            facility = Facility.objects.create(
+                hostel=hostel,
+                display_picture=display_picture,
+                **data,
+            )
+            for timing in timings:
+                timing = json.loads(timing)
+                timing_object = Timing.objects.create(**timing)
+                facility.timings.add(timing_object)
+
+            return Response('Facility created', status=status.HTTP_201_CREATED)
             
         return Response(
             {"You are not allowed to perform this action !"},
