@@ -56,15 +56,15 @@ class RoomBookingViewset(viewsets.ModelViewSet):
                 status=status.HTTP_403_FORBIDDEN,
             )
         try:
+            sanitized_data = {}
+            for data in self.request.POST:
+                sanitized_data[data] = self.request.POST[data]
+            room_booking = RoomBooking.objects.create(
+                person=request.person,
+                **sanitized_data,
+            )
             visitor_index = 0
             for visitor in visitors:
-                sanitized_data = {}
-                for data in self.request.POST:
-                    sanitized_data[data] = self.request.POST[data]
-                room_booking = RoomBooking.objects.create(
-                    person=request.person,
-                    **sanitized_data,
-                )
                 visitor = json.loads(visitor)
                 visitor_full_name = visitor.pop('full_name')
                 visitor_person = Person.objects.create(
