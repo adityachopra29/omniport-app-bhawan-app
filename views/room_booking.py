@@ -147,8 +147,18 @@ class RoomBookingViewset(viewsets.ModelViewSet):
         """
         Filter based on hostel
         """
-        filters['person__residentialinformation__residence__code']= \
+        filters['person__residentialinformation__residence__code'] = \
                 self.kwargs["hostel__code"]
+
+        """
+        Filter based on date of booking, if past=True then filter booking which
+        are reqeusted from a date date that has passed
+        """
+        if 'past' in params.keys():
+            if params['past'] == 'true':
+                filters['requested_from__lt'] = datetime.now()
+            elif params['past'] == 'false':
+                filters['requested_from__gte'] = datetime.now()
 
         """
         If not hostel admin, list the booking by the person only.
