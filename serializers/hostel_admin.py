@@ -17,6 +17,8 @@ class HostelAdminSerializer(serializers.ModelSerializer):
         read_only=True,
     )
     email_address = serializers.SerializerMethodField()
+    phone_number = serializers.SerializerMethodField()
+    room_number = serializers.SerializerMethodField()
 
     class Meta:
         """
@@ -29,6 +31,8 @@ class HostelAdminSerializer(serializers.ModelSerializer):
             'designation',
             'name',
             'email_address',
+            'phone_number',
+            'room_number',
         ]
 
     def get_email_address(self, admin):
@@ -41,3 +45,26 @@ class HostelAdminSerializer(serializers.ModelSerializer):
             return contact_information.email_address
         except ContactInformation.DoesNotExist:
             return None
+    
+    def get_phone_number(self, obj):
+        """
+        Returns the phone number of an admin.
+         Returns the primary phone number of the admin
+        :return: the primary phone number of the admin
+        """
+
+        try:
+            contact_information = \
+                ContactInformation.objects.get(person=obj.person)
+            return contact_information.primary_phone_number
+        except ContactInformation.DoesNotExist:
+            return None
+    
+    def get_room_number(self, obj):
+        """
+        Returns the room number of admin.
+         Returns the primary room number of the admin
+        :return: the primary room number of the admin
+        """
+
+        return obj.person.residentialinformation.room_number
