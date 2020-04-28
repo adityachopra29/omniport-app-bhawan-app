@@ -26,3 +26,6 @@ class HostelAdmin(AbstractRole):
         designation = self.get_designation_display()
         hostel = self.hostel.name
         return f"{person} - {designation}, {hostel}"
+    
+    class Meta:
+        unique_together = ('hostel', 'designation')
