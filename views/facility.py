@@ -8,7 +8,6 @@ from rest_framework.permissions import IsAuthenticated
 from bhawan_app.models import Facility
 from bhawan_app.models import Timing
 from bhawan_app.serializers.facility import FacilitySerializer
-from bhawan_app.pagination.custom_pagination import CustomPagination
 from bhawan_app.managers.services import is_hostel_admin
 
 Residence = swapper.load_model('kernel', 'Residence')
@@ -21,7 +20,6 @@ class FacilityViewset(viewsets.ModelViewSet):
 
     serializer_class = FacilitySerializer
     permission_classes = [IsAuthenticated,]
-    pagination_class = CustomPagination
     allowed_methods = ['GET', 'POST', 'PATCH']
 
     def get_queryset(self):

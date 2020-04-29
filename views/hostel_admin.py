@@ -7,7 +7,6 @@ from rest_framework.response import Response
 from bhawan_app.models.roles.hostel_admin import HostelAdmin
 from bhawan_app.serializers.hostel_admin import HostelAdminSerializer
 from bhawan_app.constants import designations
-from bhawan_app.pagination.custom_pagination import CustomPagination
 from bhawan_app.managers.services import is_warden
 
 Person = swapper.load_model('Kernel', 'Person')
@@ -20,7 +19,6 @@ class HostelAdminViewset(viewsets.ModelViewSet):
 
     serializer_class = HostelAdminSerializer
     allowed_methods = ['GET', 'POST', 'PATCH',]
-    pagination_class = CustomPagination
 
     def get_queryset(self):
         """
