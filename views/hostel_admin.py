@@ -1,4 +1,5 @@
 import swapper
+from datetime import date
 
 from rest_framework import viewsets, status
 from rest_framework.response import Response
@@ -10,6 +11,7 @@ from bhawan_app.pagination.custom_pagination import CustomPagination
 from bhawan_app.managers.services import is_warden
 
 Person = swapper.load_model('Kernel', 'Person')
+Hostel = swapper.load_model('Kernel', 'Residence')
 
 class HostelAdminViewset(viewsets.ModelViewSet):
     """
@@ -54,6 +56,41 @@ class HostelAdminViewset(viewsets.ModelViewSet):
         filters['person__residentialinformation__residence__code']= \
                 self.kwargs['hostel__code']
         return filters
+
+    def create(self, request, hostel__code, pk=None):
+        if is_warden(request.person):
+            try:
+                serializer = self.get_serializer(data=request.data)
+                serializer.is_valid(raise_exception=True)
+                person = Person.objects.get(pk=request.data['person'])
+                today = date.today()
+                hostel = Hostel.objects.get(code=hostel__code)
+
+                if person.residentialinformation.residence.code != hostel__code:
+                    raise Exception(
+                        f'{person.full_name} is not a resident of {hostel.name}',
+                    )
+                    
+                serializer.save(
+                    person=person,
+                    start_date=today,
+                    hostel=hostel,
+                )
+                return Response(
+                    serializer.data,
+                    status=status.HTTP_201_CREATED,
+                )
+
+            except Exception as error:
+                return Response(
+                    str(error),
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+
+        return Response(
+            'Only warden is allowed to perform this action !',
+            status=status.HTTP_403_FORBIDDEN,
+        )
 
     def partial_update(self, request, hostel__code, pk=None):
         if is_warden(request.person):
