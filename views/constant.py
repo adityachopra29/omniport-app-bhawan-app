@@ -1,3 +1,5 @@
+import swapper
+
 from rest_framework import viewsets, mixins
 from rest_framework.response import Response
 from rest_framework.renderers import JSONRenderer
@@ -8,6 +10,8 @@ from bhawan_app.constants import (
     statuses,
     days,
 )
+
+Hostel = swapper.load_model('Kernel', 'Residence')
 
 class ConstantViewset(
     mixins.ListModelMixin, 
@@ -54,4 +58,9 @@ class ConstantViewset(
             'BOOKING_STATUSES': reverse_booking_statuses_map,
         }
         response['days'] = reverse_days
+
+        hostels = Hostel.objects.all()
+        response['hostels'] = {
+            hostel.code: hostel.name for hostel in hostels
+        }
         return Response(response)
