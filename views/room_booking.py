@@ -70,7 +70,7 @@ class RoomBookingViewset(viewsets.ModelViewSet):
                 visitor_person = Person.objects.create(
                     full_name=visitor_full_name,
                 )
-                photo_identification = file_data.pop(f'visitors_{visitor_index}')
+                photo_identification = file_data.pop(f'visitors{visitor_index}')
                 Visitor.objects.create(
                     person=visitor_person,
                     photo_identification=photo_identification,
