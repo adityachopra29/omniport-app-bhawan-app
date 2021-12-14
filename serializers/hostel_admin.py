@@ -47,7 +47,7 @@ class HostelAdminSerializer(serializers.ModelSerializer):
         try:
             contact_information = \
                 ContactInformation.objects.get(person=admin.person)
-            return contact_information.email_address
+            return contact_information.institute_webmail_address
         except ContactInformation.DoesNotExist:
             return None
 

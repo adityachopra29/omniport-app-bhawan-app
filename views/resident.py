@@ -187,7 +187,7 @@ class ResidentViewset(viewsets.ModelViewSet):
                 contact_information = \
                     ContactInformation.objects.filter(person=person).first()
                 if(contact_information):
-                    obj["email_address"] = contact_information.email_address
+                    obj["email_address"] = contact_information.institute_webmail_address
                     obj["phone_number"] = contact_information.primary_phone_number
             except ContactInformation.DoesNotExist:
                 obj["email_address"] = None
@@ -436,7 +436,7 @@ class ResidentViewset(viewsets.ModelViewSet):
             contact_information = \
                 ContactInformation.objects.filter(person=resident.person).first()
             if(contact_information):
-                return contact_information.email_address
+                return contact_information.institute_webmail_address
         except ContactInformation.DoesNotExist:
             return None
         return None

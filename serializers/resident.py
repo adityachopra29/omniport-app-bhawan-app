@@ -91,7 +91,7 @@ class ResidentSerializer(serializers.ModelSerializer):
             contact_information = \
                 ContactInformation.objects.filter(person=resident.person).first()
             if(contact_information):
-                return contact_information.email_address
+                return contact_information.institute_webmail_address
         except ContactInformation.DoesNotExist:
             return None
 
