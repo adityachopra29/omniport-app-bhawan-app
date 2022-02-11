@@ -251,19 +251,31 @@ class ResidentViewset(viewsets.ModelViewSet):
         data = request.data
         enrolment_number = pk
         try:
-            instance = Resident.objects.get(person__student__enrolment_number=enrolment_number, is_resident = True)
+            instance = Resident.objects.get(
+                person__student__enrolment_number=enrolment_number,
+                is_resident=True,
+            )
         except Resident.DoesNotExist:
             return Response(
                 "Resident with this enrolment number doesn't exist !",
                 status=status.HTTP_404_NOT_FOUND,
             )
-        room_number = data.pop('room_number')
-        if len(data) > 0:
-            return Response(
-                "You are only allowed to change room number of a person !",
-                status=status.HTTP_403_FORBIDDEN,
-            )
-        instance.save(room_number=room_number)
+
+        if "room_number" in data:
+            instance.room_number = data.get("room_number")
+
+        if "is_living_in_campus" in data:
+            instance.is_living_in_campus = data.get("is_living_in_campus")
+
+        if "fathers_contact" in data:
+            instance.fathers_contact = data.get("fathers_contact")
+        
+        if "mothers_contact" in data:
+            instance.mothers_contact = data.get("mothers_contact")
+
+        if "fee_type" in data:
+            instance.fee_type = data.get("fee_type")
+        instance.save()
         return Response(ResidentSerializer(instance).data)
 
     def apply_filters(self, request, queryset):
@@ -275,6 +287,14 @@ class ResidentViewset(viewsets.ModelViewSet):
         search_query = Q()
         params = self.request.GET
         
+
+        """
+        Filter based on feetype
+        """
+        fee_type = params.get('feeType', None)
+        if fee_type:
+            filters['fee_type'] = fee_type
+
         """
         Filter based on search(Name/Enrollment no.)
         """
@@ -487,9 +507,12 @@ class ResidentViewset(viewsets.ModelViewSet):
         data = {
             'Enrolment No.': [],
             'Name': [],
+            'Hostel': [],
             'Room No.': [],
             'Contact No': [],
             'Email': [],
+            'Fee Status': [],
+            'Inside Campus': [], 
             'Current Year': [],
             'Department': [],
             'Degree': [],
@@ -501,7 +524,6 @@ class ResidentViewset(viewsets.ModelViewSet):
             'Postal Code': [],
             'Display Picture': [],
             'Reservation Category': [],
-            'Inside Campus': [],
         }
         for resident in queryset:
             try:
@@ -509,8 +531,10 @@ class ResidentViewset(viewsets.ModelViewSet):
                 data['Enrolment No.'].append(self.get_enrolment_number(resident))
                 data['Name'].append(resident.person.full_name)
                 data['Room No.'].append(resident.room_number)
+                data['Hostel'].append(resident.hostel.name)
                 data['Contact No'].append(self.get_phone_number(resident))
                 data['Email'].append(self.get_email_address(resident))
+                data['Fee Status'].append(resident.fee_type)
                 data['Current Year'].append(self.get_current_year(resident))
                 data['Degree'].append(department[1])
                 data['Department'].append(department[0])

@@ -60,6 +60,7 @@ class ResidentSerializer(serializers.ModelSerializer):
             "resident_name",
             "room_number",
             "is_living_in_campus",
+            "fee_type",
             "start_date",
             "end_date",
             "hostel_code",

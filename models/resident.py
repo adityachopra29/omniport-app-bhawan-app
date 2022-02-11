@@ -4,6 +4,7 @@ from django.core.exceptions import ValidationError
 
 from formula_one.models.base import Model
 
+from bhawan_app.constants import statuses
 
 
 class Resident(Model):
@@ -47,6 +48,11 @@ class Resident(Model):
     start_date = models.DateTimeField(auto_now_add=True)
     end_date = models.DateTimeField(null=True, blank=True)
     is_living_in_campus = models.BooleanField(default = True)
+    fee_type = models.CharField(
+        max_length=10,
+        choices=statuses.FEE_TYPES,
+        default=statuses.LIVING,
+    )
 
     def clean(self):
         """
