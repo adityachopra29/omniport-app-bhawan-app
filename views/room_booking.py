@@ -95,7 +95,7 @@ class RoomBookingViewset(viewsets.ModelViewSet):
                         "Only Supervisor is allowed to perform this action!",
                         status=status.HTTP_403_FORBIDDEN,
                     )
-            elif not is_warden(request.person, hostel__code) and not is_global_admin(request.person):
+            elif not is_warden(request.person, hostel__code) and not is_global_admin(request.person) and not is_supervisor(request.person, hostel__code):
                 return Response(
                     "Only Warden is allowed to perform this action!",
                     status=status.HTTP_403_FORBIDDEN,

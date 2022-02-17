@@ -360,8 +360,7 @@ class ResidentViewset(viewsets.ModelViewSet):
         """
         try:
             person = Person.objects.get(student__enrolment_number=pk)
-            hostel = Residence.objects.get(code=hostel__code)
-            residents = Resident.objects.filter(person=person, hostel=hostel)
+            residents = Resident.objects.filter(person=person)
             prev_records = []
             for resident in residents:
                 record = {
@@ -515,6 +514,10 @@ class ResidentViewset(viewsets.ModelViewSet):
             'Inside Campus': [], 
             'Current Year': [],
             'Department': [],
+            'Fathers Name': [],
+            'Fathers Contact': [],
+            'Mothers Name': [],
+            'Mothers Contact': [],
             'Degree': [],
             'Date of Birth': [],
             'Address': [],
@@ -522,7 +525,6 @@ class ResidentViewset(viewsets.ModelViewSet):
             'State': [],
             'Country': [],
             'Postal Code': [],
-            'Display Picture': [],
             'Reservation Category': [],
         }
         for resident in queryset:
@@ -535,6 +537,18 @@ class ResidentViewset(viewsets.ModelViewSet):
                 data['Contact No'].append(self.get_phone_number(resident))
                 data['Email'].append(self.get_email_address(resident))
                 data['Fee Status'].append(resident.fee_type)
+                if(resident.father):
+                    data['Fathers Name'].append(resident.father.full_name)
+                    data['Fathers Contact'].append(resident.fathers_contact)
+                else:
+                    data['Fathers Name'].append("")
+                    data['Fathers Contact'].append("")
+                if(resident.mother):
+                    data['Mothers Name'].append(resident.mother.full_name)
+                    data['Mothers Contact'].append(resident.mothers_contact)
+                else:
+                    data['Mothers Name'].append("")
+                    data['Mothers Contact'].append("")
                 data['Current Year'].append(self.get_current_year(resident))
                 data['Degree'].append(department[1])
                 data['Department'].append(department[0])
@@ -544,9 +558,11 @@ class ResidentViewset(viewsets.ModelViewSet):
                 data['State'].append(self.get_state(resident))
                 data['Country'].append(self.get_country(resident))
                 data['Postal Code'].append(self.get_postal_code(resident))
-                data['Display Picture'].append(resident.person.display_picture)
                 data['Reservation Category'].append(self.get_reservation_category(resident))
-                data['Inside Campus'].append(resident.is_living_in_campus)
+                if (resident.is_living_in_campus):
+                    data['Inside Campus'].append("Yes")
+                else:
+                    data['Inside Campus'].append("No")
             except IndexError:
                 pass
 
