@@ -10,7 +10,7 @@ from bhawan_app.models.roles.hostel_admin import HostelAdmin
 from bhawan_app.models.resident import Resident
 from bhawan_app.serializers.hostel_admin import HostelAdminSerializer
 from bhawan_app.constants import designations
-from bhawan_app.managers.services import is_warden, is_global_admin
+from bhawan_app.managers.services import is_warden, is_global_admin, is_supervisor
 from bhawan_app.constants import designations
 
 Person = swapper.load_model('Kernel', 'Person')
