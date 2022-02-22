@@ -18,8 +18,10 @@ class Facility(Model):
     This model contains information about a facility of a hostel
     """
 
-    hostel = models.ManyToManyField(
+    hostel = models.ForeignKey(
         to=swapper.get_model_name("kernel", "Residence"),
+        on_delete=models.CASCADE,
+        null=True
     )
     name = models.CharField(max_length=63, blank=False, null=False,)
     description = models.TextField(blank=True, null=True,)

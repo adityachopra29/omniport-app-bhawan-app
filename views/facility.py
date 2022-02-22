@@ -44,7 +44,6 @@ class FacilityViewset(viewsets.ModelViewSet):
         Create facility instance if user has required permissions.
         :return: status code of the request
         """
-
         if not is_global_admin(request.person) and not is_hostel_admin(request.person, hostel__code):
             return Response(
             {"You are not allowed to perform this action !"},
@@ -54,22 +53,21 @@ class FacilityViewset(viewsets.ModelViewSet):
             hostel = Residence.objects.get(code=hostel__code)
             timings = self.request.POST.pop('timings')
             display_picture = self.request.FILES.get('display_picture')
-
             data = {}
             for field in self.request.POST:
                 data[field] = "".join(self.request.POST[field])
             facility = Facility.objects.create(
+                hostel = hostel,
                 display_picture=display_picture,
                 **data,
             )
-            facility.hostel.add(hostel)
             for timing in timings:
                 timing = json.loads(timing)
                 timing_object = Timing.objects.create(**timing)
                 facility.timings.add(timing_object)
 
             return Response(FacilitySerializer(facility).data, status=status.HTTP_201_CREATED)
-        except Exception:
+        except Exception as e:
             return Response('Bad request', status=status.HTTP_400_BAD_REQUEST)
 
 

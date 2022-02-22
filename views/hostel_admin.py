@@ -69,25 +69,9 @@ class HostelAdminViewset(viewsets.ModelViewSet):
                 serializer.is_valid(raise_exception=True)
                 person = Person.objects.get(pk=data['person'])
                 hostel = Hostel.objects.get(code=hostel__code)
-                residents = Resident.objects.filter(person=person)
+                residents = Resident.objects.filter(person=person, hostel = hostel, is_resident = True)
                 is_resident = residents.exists()
-                """
-                1. A resident can't hold administrative any posts.
-                2. Can't hold any position in any other hostel than the
-                   one he's residing in.
-                """
-                if is_resident:
-                    # if designation in designations.ADMINISTRATIVE_COUNCIL_LIST:
-                    #     return Response(
-                    #         "Resident of a hostel can't hold Administrative positions",
-                    #         status=status.HTTP_403_FORBIDDEN,
-                    #     )
-                    hostel_codes = list( residents.values_list('hostel__code', flat=True))
-                    if hostel__code not in hostel_codes:
-                        return Response(
-                            f"{person.full_name} is not a resident of {hostel__code}",
-                            status=status.HTTP_403_FORBIDDEN,
-                        )
+
 
                 if designation in designations.GLOBAL_COUNCIL_LIST and not is_global_admin(request.person):
                     return Response(
