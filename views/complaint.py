@@ -174,7 +174,7 @@ class ComplaintViewset(viewsets.ModelViewSet):
         If not hostel admin, list the booking by the person only. Person is the
         currently authenticated user.
         """
-        if not is_hostel_admin(request.person, self.kwargs["hostel__code"]):
+        if not is_hostel_admin(request.person, self.kwargs["hostel__code"]) and not is_global_admin(request.person):
             filters['resident__person'] = request.person.id
 
         queryset = Complaint.objects.filter(**filters).filter(search_query).order_by('-datetime_modified')
