@@ -306,7 +306,6 @@ class ResidentViewset(viewsets.ModelViewSet):
         Filter based on the fact, if person is resident
         """
         is_resident = strtobool(params.get('is_resident', 'true'))
-        filters['is_resident'] = is_resident
 
         """
         Filter based on feetype
@@ -380,11 +379,12 @@ class ResidentViewset(viewsets.ModelViewSet):
             else:
                 queryset = queryset.filter(person__student__isnull=True)
 
-        queryset = queryset.filter(**filters).filter(search_query).order_by('-datetime_modified')
+        queryset = queryset.filter(**filters).filter(search_query).order_by('-datetime_created')
 
         if not is_resident:
-            queryset = queryset.order_by('person').distinct('person')
+            queryset = queryset.filter(id__in=queryset.order_by('person','-datetime_created').distinct('person').values('id')).filter(is_resident=is_resident)
 
+        queryset = queryset.filter(is_resident=is_resident)
         return queryset
 
     @action(detail=True, methods=['get'])
