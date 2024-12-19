@@ -53,10 +53,16 @@ class Resident(Model):
     is_living_in_campus = models.BooleanField(default = True)
     address_bhawan = models.TextField(default="", null=True, blank=True)
     registration_date=models.DateTimeField(null=True, blank=True)
+    admission_date=models.DateTimeField(null=True, blank=True)
     fee_type = models.CharField(
         max_length=10,
         choices=statuses.FEE_TYPES,
         default=statuses.LIVING,
+    )
+    contact_number_as_bhawan = models.CharField(
+        max_length=15,
+        null=True,
+        blank=True
     )
 
     def clean(self):
