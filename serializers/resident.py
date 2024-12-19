@@ -75,6 +75,8 @@ class ResidentSerializer(serializers.ModelSerializer):
             "address",
             "address_bhawan",
             "registration_date",
+            "admission_date",
+            "contact_number_as_bhawan",
             "city",
             "state",
             "country",
