@@ -68,7 +68,6 @@ class ResidentViewset(viewsets.ModelViewSet):
             start_date = data['start_date']
             fee_type = data['fee_type']
             address_bhawan=data['address_bhawan']
-            registration_date=data['registration_date']
             admission_date=data['admission_date']
             contact_number_as_bhawan=data['contact_number_as_bhawan']
         except Exception:
@@ -161,10 +160,6 @@ class ResidentViewset(viewsets.ModelViewSet):
                 mother = Person.objects.create(
                     full_name = mothers_name
                 )
-        
-        reg_date = None
-        if not (registration_date == "Invalid date" or registration_date == ""):
-            reg_date = registration_date
 
         adm_date = None
         if not (admission_date == "Invalid date" or admission_date == ""):
@@ -183,7 +178,6 @@ class ResidentViewset(viewsets.ModelViewSet):
             is_resident=True,
             mothers_contact=mothers_contact,
             address_bhawan=address_bhawan,
-            registration_date=reg_date,
             admission_date=adm_date,
             contact_number_as_bhawan=contact_number_as_bhawan,
         )
@@ -215,7 +209,6 @@ class ResidentViewset(viewsets.ModelViewSet):
             obj["reservation_category"] = None
             obj["is_living_in_campus"] = False
             obj["address_bhawan"]=None
-            obj["registration_date"]=None
             obj["admission_date"]=None
             obj["contact_number_as_bhawan"]=None
 
@@ -315,12 +308,6 @@ class ResidentViewset(viewsets.ModelViewSet):
         if "address_bhawan" in data:
             instance.address_bhawan = data.get("address_bhawan")
     
-        if "registration_date" in data:
-            reg_date = None
-            registration_date = data.get("registration_date")
-            if not (registration_date == "" or registration_date == "Invalid date"):
-                reg_date = registration_date                
-            instance.registration_date = reg_date
 
         if "admission_date" in data:
             adm_date = None
@@ -599,7 +586,6 @@ class ResidentViewset(viewsets.ModelViewSet):
             'Date of Birth': [],
             'Address': [],
             'Address Bhawan':[],
-            'Registration Date':[],
             'Admission Date':[],
             'Contact Number As Per Bhawan Records':[],
             'City': [],
@@ -636,7 +622,6 @@ class ResidentViewset(viewsets.ModelViewSet):
                 data['Date of Birth'].append(self.get_date_of_birth(resident))
                 data['Address'].append(self.get_address(resident))
                 data['Address Bhawan'].append(resident.address_bhawan)
-                data['Registration Date'].append(resident.registration_date)
                 data['Admission Date'].append(resident.admission_date)
                 data['Contact Number As Per Bhawan Records'].append(resident.contact_number_as_bhawan)
                 data['City'].append(self.get_city(resident))
