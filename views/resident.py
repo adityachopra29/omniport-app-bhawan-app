@@ -256,12 +256,17 @@ class ResidentViewset(viewsets.ModelViewSet):
             try:
                 student = Student.objects.get(person=person)
                 branch = Branch.objects.get(student=student)
-                obj["department"] = [branch.name, branch.degree.name]
+                obj["program"] = [branch.name, branch.degree.name]
+                obj["department"] = branch.department.name
                 obj["current_year"] = student.current_year
+                obj["current_semester"] = student.current_semester
             except Student.DoesNotExist:
+                obj["program"] = None
                 obj["department"] = None
                 obj["current_year"] = None
+                obj["current_semester"] = None
             except Branch.DoesNotExist:
+                obj["program"] = None
                 obj["department"] = None
 
             return Response(obj)
@@ -369,6 +374,23 @@ class ResidentViewset(viewsets.ModelViewSet):
         is_living_in_campus = params.get('is_living_in_campus', None)
         if is_living_in_campus:
             filters['is_living_in_campus'] = is_living_in_campus
+
+        """
+        Filter based on Semester
+        """
+        semester = params.get('semester', None)
+        
+        if semester:
+            semester_array = semester.split(',')
+            filters['person__student__current_semester__in'] = semester_array
+
+        """
+        Filter based on Department
+        """
+        department = params.get('department', None)
+        if department:
+            department_array = department.split(',')
+            filters['person__student__branch__department__code__in'] = department_array
 
         """
         Filter based on Branch
@@ -577,6 +599,7 @@ class ResidentViewset(viewsets.ModelViewSet):
             'Fee Status': [],
             'Inside Campus': [], 
             'Current Year': [],
+            'Program': [],
             'Department': [],
             'Fathers Name': [],
             'Fathers Contact': [],
@@ -596,7 +619,6 @@ class ResidentViewset(viewsets.ModelViewSet):
         }
         for resident in queryset:
             try:
-                department = self.get_department(resident)
                 data['Enrolment No.'].append(self.get_enrolment_number(resident))
                 data['Name'].append(resident.person.full_name)
                 data['Room No.'].append(resident.room_number)
@@ -617,8 +639,13 @@ class ResidentViewset(viewsets.ModelViewSet):
                     data['Mothers Name'].append("")
                     data['Mothers Contact'].append("")
                 data['Current Year'].append(self.get_current_year(resident))
-                data['Degree'].append(department[1])
-                data['Department'].append(department[0])
+                data['Current Semester'].append(self.get_current_semester(resident))
+
+                program = self.get_program(resident)
+                data['Degree'].append(program[1])
+                data['Program'].append(program[0])
+
+                data['Department'].append(self.get_department(resident))
                 data['Date of Birth'].append(self.get_date_of_birth(resident))
                 data['Address'].append(self.get_address(resident))
                 data['Student Home Address as per Bhawan Records'].append(resident.address_bhawan)
@@ -688,10 +715,23 @@ class ResidentViewset(viewsets.ModelViewSet):
         except Student.DoesNotExist:
             return None
         return None
-
-    def get_department(self, resident):
+    
+    def get_current_semester(self, resident):
         """
-        Retrives the department of a resident
+        Retrives the current semester of a resident
+        if he is a student
+        """
+        try:
+            student = Student.objects.get(person=resident.person)
+            return student.current_semester
+        except Student.DoesNotExist:
+            return None
+        return None
+
+
+    def get_program(self, resident):
+        """
+        Retrives the program of a resident
         if he is a student
         """
         try:
@@ -703,6 +743,20 @@ class ResidentViewset(viewsets.ModelViewSet):
         except Branch.DoesNotExist:
             return [None, None]
         return [None, None]
+    
+    def get_department(self, resident):
+        """
+        Retrives the department of a resident
+        if he is a student
+        """
+        try:
+            student = Student.objects.get(person=resident.person)
+            branch = Branch.objects.get(student=student)
+            return branch.department.name
+        except Student.DoesNotExist:
+            return None
+        except Branch.DoesNotExist:
+            return None
 
     def get_phone_number(self, resident):
         """
